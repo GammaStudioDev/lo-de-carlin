@@ -1,0 +1,144 @@
+---
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+
+interface Props {
+	items: unknown[];
+	Card: AstroComponentFactory;
+	cardProp?: string;
+	itemClass?: string;
+	stepSeconds?: number;
+}
+
+const {
+	items,
+	Card,
+	cardProp = 'item',
+	itemClass = 'w-40 sm:w-48 lg:w-64',
+	stepSeconds = 5,
+} = Astro.props;
+---
+
+{items.length > 0 && (
+	<section class="carousel-root relative w-11/12 lg:w-2/3 mx-auto py-4 overflow-hidden">
+		<div class="carousel-track flex gap-6 transition-transform duration-500 ease-in-out" data-step-seconds={stepSeconds} data-item-count={items.length}>
+			{[...items, ...items, ...items].map((item, i) => {
+				const isPrimary = i >= items.length && i < items.length * 2;
+				return (
+					<div class:list={["shrink-0", itemClass]} aria-hidden={isPrimary ? undefined : 'true'}>
+						<Card {...{ [cardProp]: item, isPrimary }} />
+					</div>
+				);
+			})}
+		</div>
+
+		<button type="button" class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-10 h-10 border border-black bg-white text-black hover:bg-black hover:text-white transition-colors duration-300 shadow-md z-10" aria-label="Anterior">
+			<svg class="w-5 h-5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter">
+				<path d="M15 18l-6-6 6-6" />
+			</svg>
+		</button>
+		<button type="button" class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-10 h-10 border border-black bg-white text-black hover:bg-black hover:text-white transition-colors duration-300 shadow-md z-10" aria-label="Siguiente">
+			<svg class="w-5 h-5 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter">
+				<path d="M9 18l6-6-6-6" />
+			</svg>
+		</button>
+	</section>
+)}
+
+<script>
+	document.addEventListener('astro:page-load', () => {
+		document.querySelectorAll<HTMLElement>('.carousel-root').forEach((root) => {
+			const track = root.querySelector<HTMLElement>('.carousel-track');
+			const prevBtn = root.querySelector<HTMLElement>('.carousel-prev');
+			const nextBtn = root.querySelector<HTMLElement>('.carousel-next');
+
+			if (!track || !prevBtn || !nextBtn) {
+				return;
+			}
+
+			const items = Array.from(track.children);
+			const itemCount = Number(track.dataset.itemCount) || 0;
+			if (items.length === 0 || itemCount === 0) {
+				return;
+			}
+
+			const stepSeconds = Number(track.dataset.stepSeconds) || 5;
+			// The track renders 3 copies of the item list back to back
+			// ([A, B, C], each of length itemCount). Starting in the middle copy
+			// (B) means there's always a full copy to step into in either
+			// direction, so it can keep advancing the same way every time —
+			// "slide 1, slide 2, slide 3, slide 1, slide 2, ..." — instead of
+			// rewinding back to the start when it runs out of room.
+			let index = itemCount;
+			// Whether a click-triggered slide is currently mid-transition. A
+			// non-smooth render (the boundary snap-back, or a resize) never fires
+			// 'transitionend', so it must clear this itself or the carousel would
+			// lock up waiting for an event that's never coming.
+			let isAnimating = false;
+
+			const itemStep = () => {
+				const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+				return items[0].getBoundingClientRect().width + gap;
+			};
+
+			const render = (smooth = true) => {
+				track.style.transition = smooth ? '' : 'none';
+				track.style.transform = `translateX(-${index * itemStep()}px)`;
+				if (!smooth) {
+					isAnimating = false;
+				}
+			};
+
+			// Once a step lands fully outside the middle copy, silently snap the
+			// index back by one copy-length as soon as the slide animation ends —
+			// the two copies are identical, so the jump is invisible.
+			const settleAfterTransition = () => {
+				isAnimating = false;
+				if (index >= itemCount * 2) {
+					index -= itemCount;
+					render(false);
+				} else if (index < itemCount) {
+					index += itemCount;
+					render(false);
+				}
+			};
+			track.addEventListener('transitionend', settleAfterTransition);
+
+			// Interrupted CSS transitions don't fire 'transitionend', so clicking
+			// next/prev again before the current slide settles would let index
+			// run further than the single ±itemCount correction above can undo —
+			// eventually sliding past all 3 rendered copies into empty space that
+			// takes several auto-advance ticks to recover from. Dropping clicks
+			// while mid-transition keeps index moving one step at a time.
+			const goTo = (newIndex: number) => {
+				if (isAnimating) {
+					return;
+				}
+				index = newIndex;
+				isAnimating = true;
+				render();
+			};
+
+			let timer = setInterval(() => goTo(index + 1), stepSeconds * 1000);
+			const restartTimer = () => {
+				clearInterval(timer);
+				timer = setInterval(() => goTo(index + 1), stepSeconds * 1000);
+			};
+
+			nextBtn.addEventListener('click', () => {
+				goTo(index + 1);
+				restartTimer();
+			});
+			prevBtn.addEventListener('click', () => {
+				goTo(index - 1);
+				restartTimer();
+			});
+
+			track.addEventListener('mouseenter', () => clearInterval(timer));
+			track.addEventListener('mouseleave', restartTimer);
+
+			window.addEventListener('resize', () => render(false));
+
+			render(false);
+		});
+	});
+</script>

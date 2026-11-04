@@ -1,0 +1,129 @@
+---
+import siteData from '../data/data.json';
+
+const { website } = siteData;
+const defaultWhatsapp = `https://api.whatsapp.com/send?phone=${encodeURIComponent(website.telephone)}&text=${encodeURIComponent('¡Hola Malabar Eventos! Me comunico desde la web para consultar disponibilidad y propuestas para mi evento.')}`;
+
+interface Props {
+	title?: string;
+	subtitle?: string;
+	description?: string;
+}
+
+const {
+	title = 'Un lugar que se vive distinto',
+	subtitle = 'Espacio de eventos en Tandil con vista panorámica a nuestras sierras y gastronomía de fuegos.',
+	description = 'Casamientos, Fiestas de 15, Aniversarios y Eventos Corporativos. Arquitectura vidriada frente a los cerros, cava de vinos, cabina de DJ profesional, pantalla LED y servicio integral tanto en locación como itinerante.',
+}: Props = Astro.props;
+---
+
+<section class="w-11/12 lg:w-4/5 max-w-7xl mx-auto min-h-[calc(100vh-6rem)] flex items-center justify-center py-12 lg:py-20 text-black">
+	<div class="grid lg:grid-cols-12 items-center gap-12 lg:gap-16 w-full">
+		<!-- Columna de texto principal -->
+		<div class="lg:col-span-7 flex flex-col items-start text-left">
+			<!-- Tag / Badge Malabar -->
+			<div class="inline-flex items-center gap-2 px-3.5 py-1.5 border border-black/20 bg-black/5 mb-6">
+				<span class="w-1.5 h-1.5 bg-black animate-pulse"></span>
+				<span class="text-[10px] font-semibold uppercase tracking-[0.25em] text-neutral-800">
+					Espacio de Eventos • Tandil, Sierras
+				</span>
+			</div>
+
+			<h1 class="animate-fade-in-up animate-duration-500 font-cinzel font-light text-4xl sm:text-6xl md:text-6xl lg:text-7xl text-black leading-[1.05] tracking-tight">
+				<span class="font-normal tracking-[0.1em] block text-[#261B14] text-2xl sm:text-3xl lg:text-4xl mb-2 font-montserrat uppercase">MALABAR</span>
+				{title}
+			</h1>
+
+			<div class="w-16 h-px bg-black/30 my-6"></div>
+
+			<p class="font-montserrat font-normal text-base sm:text-lg text-neutral-800 leading-relaxed max-w-xl">
+				{subtitle}
+			</p>
+
+			<p class="text-neutral-600 text-xs sm:text-sm leading-relaxed max-w-xl mt-3 font-light">
+				{description}
+			</p>
+
+			<!-- Píldoras de servicios con bordes nítidos -->
+			<div class="flex flex-wrap items-center gap-2 mt-8">
+				<span class="text-[11px] uppercase tracking-wider px-3 py-1.5 border border-black/15 bg-neutral-50 text-neutral-800">
+					Vista a las Sierras
+				</span>
+				<span class="text-[11px] uppercase tracking-wider px-3 py-1.5 border border-black/15 bg-neutral-50 text-neutral-800">
+					Fuegos & Asado Criollo
+				</span>
+				<span class="text-[11px] uppercase tracking-wider px-3 py-1.5 border border-black/15 bg-neutral-50 text-neutral-800">
+					Cava de Vinos
+				</span>
+				<span class="text-[11px] uppercase tracking-wider px-3 py-1.5 border border-black/15 bg-neutral-50 text-neutral-800">
+					Cabina DJ & Pantalla LED
+				</span>
+				<span class="text-[11px] uppercase tracking-wider px-3 py-1.5 border border-black/15 bg-neutral-50 text-neutral-800">
+					Coctelería de Autor
+				</span>
+				<span class="text-[11px] uppercase tracking-wider px-3 py-1.5 border border-black/15 bg-neutral-50 text-neutral-800">
+					Servicio Itinerante
+				</span>
+			</div>
+
+			<!-- Botones de Acción: Blanco y Negro, sin redondeces -->
+			<div class="mt-10 flex flex-wrap items-center gap-4">
+				<a
+					href="#services"
+					class="inline-flex items-center justify-center gap-3 border border-black bg-black hover:bg-white text-white hover:text-black font-semibold text-xs uppercase tracking-[0.2em] py-4 px-8 transition-all duration-300"
+				>
+					<span>Ver Propuestas</span>
+					<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+					</svg>
+				</a>
+
+				<a
+					href="#reservas"
+					class="inline-flex items-center justify-center gap-2 border border-black/30 hover:border-black text-black hover:bg-black/5 font-semibold text-xs uppercase tracking-[0.2em] py-4 px-8 transition-all duration-300"
+				>
+					<span>Consultar Fecha</span>
+				</a>
+			</div>
+		</div>
+
+		<!-- Columna de imagen principal: Fachada Malabar con marco nítido -->
+		<div class="lg:col-span-5 relative w-full">
+			<div class="relative aspect-4/5 sm:aspect-1/1 lg:aspect-4/5 w-full overflow-hidden border border-black/20 bg-neutral-100 group">
+				<img
+					src="/images/malabar/exterior-sierras.png"
+					alt="Malabar Eventos en Tandil con vista panorámica a las sierras al atardecer"
+					class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+					loading="eager"
+				/>
+				<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
+
+				<!-- Badge superior sin bordes redondeados -->
+				<div class="absolute top-4 right-4">
+					<span class="inline-flex items-center gap-2 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] bg-white/95 border border-black/20 text-black">
+						<span class="w-1.5 h-1.5 bg-black animate-pulse"></span>
+						Spot en las Sierras
+					</span>
+				</div>
+
+				<!-- Pie de imagen nítido -->
+				<div class="absolute bottom-0 inset-x-0 p-5 bg-white/95 backdrop-blur-md border-t border-black/15 text-black">
+					<div class="flex items-center justify-between gap-4">
+						<div>
+							<p class="font-cinzel text-base font-semibold tracking-wider uppercase text-black">Salón & Atardeceres</p>
+							<p class="text-[11px] text-neutral-600 font-montserrat tracking-widest uppercase">Av. Don Bosco • Tandil</p>
+						</div>
+						<a
+							href={defaultWhatsapp}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="shrink-0 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] border border-black bg-black hover:bg-white text-white hover:text-black transition-all duration-200"
+						>
+							Consultar
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

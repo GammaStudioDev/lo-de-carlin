@@ -1,0 +1,94 @@
+---
+import Title from './Title.astro';
+import siteData from '../data/data.json';
+
+const { website, colors } = siteData;
+const address = website.address || 'Av. Don Bosco 405, B7000 Tandil, Provincia de Buenos Aires, Argentina';
+const lat = -37.352;
+const lon = -59.136;
+
+const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent('Av. Don Bosco 405, Tandil, Buenos Aires, Argentina')}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+const geoHref = `geo:${lat},${lon}?q=${lat},${lon}(${encodeURIComponent(website.name)})`;
+const fallbackHref = website.ubication || `https://maps.google.com/?q=${encodeURIComponent(address)}`;
+const secondaryColor = colors.secondary;
+---
+<Title title="Encontranos en Tandil" description="Vení a conocer nuestras instalaciones con vista panorámica a las sierras"/>
+
+<section class="animate-fade-in-up w-11/12 lg:w-4/5 max-w-7xl mx-auto py-8 text-black">
+	<div class="flex flex-col lg:grid lg:grid-cols-2 items-stretch bg-white border border-black/15 shadow-sm">
+		<!-- Columna de información -->
+		<div class="flex flex-col justify-center gap-6 p-8 sm:p-10 lg:p-12">
+			<div class="flex items-center gap-4">
+				<span class="flex items-center justify-center w-12 h-12 border border-black/20 bg-neutral-50 text-black shrink-0">
+					<svg viewBox="0 0 24 24" stroke-width="1.5" class="w-6 h-6 stroke-black fill-none" aria-hidden="true">
+						<path stroke-linecap="square" stroke-linejoin="miter" d="M12 21s7-7.5 7-12.5A7 7 0 0 0 5 8.5C5 13.5 12 21 12 21z" />
+						<circle cx="12" cy="8.5" r="2.5" stroke-linecap="square" stroke-linejoin="miter" />
+					</svg>
+				</span>
+				<div>
+					<span class="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#261B14] block">Ubicación Privilegiada</span>
+					<h2 class="text-2xl sm:text-3xl font-cinzel font-light uppercase tracking-tight text-black">Dónde estamos</h2>
+				</div>
+			</div>
+
+			<p class="text-sm sm:text-base text-neutral-800 leading-relaxed font-light break-words">
+				{address}
+			</p>
+			
+			<div class="space-y-2 text-xs sm:text-sm text-neutral-700 bg-neutral-50 p-5 border border-black/10 font-light">
+				<p class="font-medium text-black uppercase tracking-wider text-[11px] mb-1">Visitas & Locación:</p>
+				<p>• Coordinación de visitas guiadas por WhatsApp</p>
+				<p>• Salón vidriado frente al cordón serrano</p>
+				<p>• Estacionamiento privado seguro en el predio</p>
+				<p>• Sector de cava de vinos & fogonero al aire libre</p>
+			</div>
+
+			<a
+				id="directions-link"
+				href={fallbackHref}
+				data-geo={geoHref}
+				data-fallback={fallbackHref}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="w-full sm:w-fit text-center inline-flex items-center justify-center gap-2 border border-black bg-black hover:bg-white text-white hover:text-black font-semibold text-xs uppercase tracking-[0.2em] py-3.5 px-6 transition-all duration-300"
+			>
+				<span>Ver en Google Maps</span>
+				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+				</svg>
+			</a>
+		</div>
+
+		<!-- Columna de mapa iframe -->
+		<div class="relative w-full h-72 sm:h-96 lg:h-auto min-h-[300px] sm:min-h-[380px] bg-neutral-100 border-t lg:border-t-0 lg:border-l border-black/15">
+			<iframe
+				src={mapSrc}
+				title={`Mapa de ubicación de Malabar Eventos en ${address}`}
+				loading="lazy"
+				referrerpolicy="no-referrer-when-downgrade"
+				class="absolute inset-0 w-full h-full border-0"
+			></iframe>
+		</div>
+	</div>
+</section>
+
+<script>
+	const link = document.getElementById('directions-link');
+	if (link instanceof HTMLAnchorElement) {
+		link.addEventListener('click', (event) => {
+			const geo = link.dataset.geo;
+			const fallback = link.dataset.fallback;
+			if (!geo || !fallback) return;
+
+			event.preventDefault();
+			const start = Date.now();
+			window.location.href = geo;
+
+			setTimeout(() => {
+				if (!document.hidden && Date.now() - start < 1500) {
+					window.open(fallback, '_blank', 'noopener,noreferrer');
+				}
+			}, 800);
+		});
+	}
+</script>

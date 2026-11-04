@@ -1,0 +1,97 @@
+{
+  "website": {
+    "name": "Malabar Eventos",
+    "shortName": "Malabar",
+    "tagline": "Un lugar que se vive distinto • Tandil",
+    "telephone": "5492494642400",
+    "phoneDisplay": "+54 9 249 464-2400",
+    "email": "malabareventostandil@gmail.com",
+    "instagram": "https://www.instagram.com/malabareventos_?stkn=ZDNlZDc0MzIxNw==",
+    "facebook": "https://www.facebook.com/malabartandil/",
+    "tiktok": "-",
+    "twitter": "-",
+    "x": "-",
+    "address": "Av. Don Bosco 405, B7000 Tandil, Provincia de Buenos Aires, Argentina",
+    "ubication": "https://share.google/DRueeQtZx2LVrRKpG",
+    "city": "Tandil",
+    "province": "Provincia de Buenos Aires",
+    "rating": "5.0",
+    "reviewsCount": 148,
+    "capacity": "Espacio exclusivo para eventos sociales y corporativos",
+    "description": "Malabar es un salón y espacio de eventos exclusivo en Tandil con vista panorámica a nuestras sierras, cava de vinos, fuegos y gastronomía criolla de autor, cabina de DJ, sonido profesional, iluminación robótica, pantalla LED y servicio integral tanto en locación como itinerante."
+  },
+  "colors": {
+    "primary": "#FFFFFF",
+    "secondary": "#000000",
+    "primaryDark": "#0A0A0A",
+    "secondaryDark": "#FFFFFF",
+    "accentBrown": "#261B14"
+  },
+  "paymentMethods": [
+    {
+      "name": "Efectivo Multidivisa",
+      "detail": "Pesos argentinos, Dólares estadounidenses y Euros",
+      "icon": "cash"
+    },
+    {
+      "name": "Tarjetas Bancarias",
+      "detail": "Tarjetas de crédito y débito de todas las entidades",
+      "icon": "card"
+    },
+    {
+      "name": "Mercado Pago",
+      "detail": "Transferencias bancarias directas y cobros con QR",
+      "icon": "wallet"
+    },
+    {
+      "name": "Criptomonedas",
+      "detail": "Bitcoin (BTC), Ethereum (ETH) y USDT",
+      "icon": "crypto"
+    }
+  ],
+  "filters": [
+    "Todos",
+    "Casamientos",
+    "Fiestas de 15",
+    "Cumpleaños & Aniversarios",
+    "Eventos Corporativos",
+    "Servicio Itinerante"
+  ],
+  "reviews": [
+    {
+      "id": 1,
+      "name": "Camila & Tomás",
+      "rating": 5,
+      "comment": "Celebramos nuestro casamiento en Malabar y fue pura magia. La vista al atardecer sobre las sierras de Tandil dejó a todos fascinados. El asado al fuego con el fogonero encendido y la cava de vinos le dieron un toque de distinción único. ¡Inolvidable!",
+      "date": "Hace 2 semanas"
+    },
+    {
+      "id": 2,
+      "name": "Franco Bianchi",
+      "rating": 5,
+      "comment": "Increíble la puesta en escena. El equipamiento de DJ, sonido, iluminación y la pantalla LED gigante transformaron la pista de baile. Coordinación impecable de todo el equipo de Malabar de principio a fin.",
+      "date": "Hace 3 semanas"
+    },
+    {
+      "id": 3,
+      "name": "Mariana Echeverría",
+      "rating": 5,
+      "comment": "Organizamos la cena anual de nuestra empresa en Tandil. El sector de la cava de vinos para la recepción y la barra de tragos de autor fueron el gran atractivo. La calidez del salón y el profesionalismo superaron todas las expectativas.",
+      "date": "Hace 1 mes"
+    },
+    {
+      "id": 4,
+      "name": "Lucía Salgado",
+      "rating": 5,
+      "comment": "Contratamos el servicio itinerante de Malabar para los 15 de mi hermana en una quinta privada. Llevaron la cabina de DJ, el sonido de primera, la pantalla LED y la barra móvil. Todo funcionó a la perfección, una verdadera experiencia.",
+      "date": "Hace 1 mes"
+    },
+    {
+      "id": 5,
+      "name": "Gonzalo Peralta",
+      "rating": 5,
+      "comment": "El mejor spot de Tandil sin dudas. La fusión del entorno natural de las sierras, la arquitectura de vanguardia y la propuesta de gastronomía a las brasas es inigualable. Recomendadísimo.",
+      "date": "Hace 2 meses"
+    }
+  ]
+}

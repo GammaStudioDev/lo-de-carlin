@@ -1,0 +1,66 @@
+backend:
+  name: github
+  repo: GammaStudioDev/automotores-del-molino
+  branch: main
+
+# Placeholder mientras no configuramos R2 (paso 3).
+# Las imagenes se commitean al repo dentro de esta carpeta.
+media_folder: "public/media/uploads"
+public_folder: "/media/uploads"
+
+collections:
+  - name: "catalog"
+    label: "Catálogo"
+    files:
+      - name: "data"
+        label: "Datos del sitio"
+        file: "src/data/data.json"
+        fields:
+          - label: "Sitio web"
+            name: "website"
+            widget: "object"
+            fields:
+              - { label: "Nombre", name: "name", widget: "string" }
+              - { label: "Teléfono", name: "telephone", widget: "string" }
+              - { label: "Email", name: "email", widget: "string" }
+              - { label: "X (Twitter)", name: "x", widget: "string" }
+              - { label: "Instagram", name: "instagram", widget: "string" }
+              - { label: "Facebook", name: "facebook", widget: "string" }
+              - { label: "TikTok", name: "tiktok", widget: "string" }
+              - { label: "Ubicación (link de Google Maps)", name: "ubication", widget: "string" }
+              - { label: "Descripción", name: "description", widget: "text" }
+          - label: "Colores"
+            name: "colors"
+            widget: "object"
+            fields:
+              - { label: "Primario", name: "primary", widget: "color" }
+              - { label: "Secundario", name: "secondary", widget: "color" }
+              - { label: "Primario oscuro", name: "primaryDark", widget: "color" }
+              - { label: "Secundario oscuro", name: "secondaryDark", widget: "color" }
+          - label: "Filtros"
+            name: "filters"
+            widget: "list"
+            field: { label: "Filtro", name: "value", widget: "string" }
+      - name: "products"
+        label: "Productos"
+        file: "src/data/products.json"
+        fields:
+          - label: "Productos"
+            name: "products"
+            widget: "list"
+            summary: "{{fields.name}} — ${{fields.price}}"
+            fields:
+              - { label: "ID", name: "id", widget: "number", value_type: "int" }
+              - { label: "Nombre", name: "name", widget: "string" }
+              - { label: "Precio", name: "price", widget: "number", value_type: "float" }
+              - { label: "Descripción", name: "description", widget: "text" }
+              - label: "Categorías"
+                name: "category"
+                widget: "list"
+                field: { label: "Categoría", name: "value", widget: "string" }
+              - { label: "En stock", name: "stock", widget: "boolean", default: true }
+              - { label: "Mostrar en carrusel", name: "carousel", widget: "boolean", default: false }
+              - label: "Imágenes"
+                name: "images"
+                widget: "list"
+                field: { label: "Imagen", name: "value", widget: "image" }

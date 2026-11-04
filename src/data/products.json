@@ -1,0 +1,121 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Casamientos & Bodas en las Sierras",
+      "description": "Una boda irrepetible con el marco imponente de las sierras de Tandil. Ceremonias al atardecer en el parque exterior, recepciones al aire libre iluminadas con faroles, asado criollo al pie del fogonero, barra de autor y fiesta hasta el amanecer con DJ en vivo y pantalla LED.",
+      "category": [
+        "Casamientos",
+        "Eventos Sociales"
+      ],
+      "features": [
+        "Ceremonia civil y simbólica al atardecer frente al paisaje serrano",
+        "Parque exterior integrado y escalinatas iluminadas para sesiones de fotos",
+        "Propuesta de fuegos criollos a las brasas con nuestro fogonero 'FOOD'",
+        "Cava de vinos exclusiva para el brindis y maridajes distinguidos",
+        "Pista de baile con cabina de DJ profesional, pantalla LED y sonido envolvente",
+        "Climatización central, grupo electrógeno propio y estacionamiento seguro en el predio",
+        "Coordinación integral y asesoramiento personalizado para los novios"
+      ],
+      "stock": true,
+      "images": [
+        "/images/malabar/casamiento-sierras.png",
+        "/images/malabar/exterior-sierras.png",
+        "/images/malabar/interior-cava.png"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Fiestas de 15 Años",
+      "description": "Tu noche soñada en un entorno de vanguardia. Entrada triunfal por las escalinatas vidriadas con letras corpóreas 'XV' iluminadas, pista de baile de máxima potencia, cabina de DJ, pantalla LED gigante, sets audiovisuales de impacto, livings modernos y mocktails exclusivos.",
+      "category": [
+        "Fiestas de 15",
+        "Eventos Sociales"
+      ],
+      "features": [
+        "Escalinatas exteriores iluminadas con letras gigantes 'XV' para una entrada soñada",
+        "Pantalla LED de alta definición para videoclips, fotos y visuales en la pista",
+        "Cabina de DJ en vivo con sonido envolvente y cabezales robóticos DMX",
+        "Barra de coctelería y mocktails frutales sin alcohol para teens",
+        "Livings contemporáneos para que tus amigos disfruten con total comodidad",
+        "Catering a las brasas, finger food gourmet y mesas dulces a elección",
+        "Seguridad privada, guardarropa y coordinación permanente durante toda la noche"
+      ],
+      "stock": true,
+      "images": [
+        "/images/malabar/cumple-15-noche.png",
+        "/images/malabar/dj-pantalla-led.png",
+        "/images/malabar/cocteleria-tragos.png"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Cumpleaños & Aniversarios",
+      "description": "Festejos privados, cumpleaños de 30, 40, 50, 60+ y aniversarios familiares. Un ambiente cálido y contemporáneo con fogonero encendido a las brasas, salón vidriado panorámico, sector de cava, música en vivo y atención dedicada.",
+      "category": [
+        "Cumpleaños & Aniversarios",
+        "Eventos Sociales"
+      ],
+      "features": [
+        "Asado criollo y cortes a las brasas con nuestro icónico fogonero 'FOOD'",
+        "Salón vidriado con vistas a las sierras y ambientación cálida con faroles de vela",
+        "Espacio de cava para degustar vinos boutique y tablas de quesos de Tandil",
+        "Musicalización y pista de baile adaptada a las preferencias del agasajado",
+        "Espacio versátil para celebraciones íntimas o recepciones numerosas",
+        "Atención personalizada de sala, mozos y servicio de barra"
+      ],
+      "stock": true,
+      "images": [
+        "/images/malabar/catering-fuegos.png",
+        "/images/malabar/interior-cava.png",
+        "/images/malabar/exterior-sierras.png"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Eventos Corporativos & Empresariales",
+      "description": "Jornadas corporativas, lanzamientos de marca, capacitaciones, agasajos de fin de año y sunsets ejecutivos con la exclusividad y serenidad de las sierras de Tandil. Tecnología de punta para presentaciones y gastronomía de alto nivel.",
+      "category": [
+        "Eventos Corporativos",
+        "Empresariales"
+      ],
+      "features": [
+        "Salón vidriado con luz natural y cortinas black-out para presentaciones",
+        "Pantalla LED gigante y equipamiento de sonido con micrófonos inalámbricos",
+        "Conectividad Wi-Fi de alta velocidad para streaming y conferencias",
+        "Opciones gastronómicas: coffee break, finger food, asado criollo o menú formal",
+        "Sector de cava y livings para networking y distensión ejecutiva",
+        "Estacionamiento privado seguro con acceso directo sobre Av. Don Bosco"
+      ],
+      "stock": true,
+      "images": [
+        "/images/malabar/exterior-sierras.png",
+        "/images/malabar/interior-cava.png",
+        "/images/malabar/dj-pantalla-led.png"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Malabar Itinerante — Tu Evento en Campo, Quinta o Domicilio",
+      "description": "Malabar sale de su locación para llevar la fiesta adonde vos elijas. Trasladamos toda nuestra técnica de sonido profesional, iluminación robótica, cabina de DJ, pantalla LED, fogoneros y barras móviles a tu estancia, quinta o espacio privado en Tandil y la región.",
+      "category": [
+        "Servicio Itinerante",
+        "Técnica & Barra"
+      ],
+      "features": [
+        "Montaje completo de cabina de DJ móvil, sonido envolvente y luces robóticas",
+        "Pantalla LED gigante móvil apta para interiores o exteriores en tu quinta o campo",
+        "Servicio de barra de tragos y coctelería con bartenders profesionales",
+        "Fogoneros móviles transportables para asados y fuegos a las brasas al aire libre",
+        "Logística propia y operadores técnicos durante todo el transcurso de la velada",
+        "Cobertura en Tandil, quintas, campos y localidades de la provincia de Buenos Aires"
+      ],
+      "stock": true,
+      "images": [
+        "/images/malabar/dj-pantalla-led.png",
+        "/images/malabar/cocteleria-tragos.png",
+        "/images/malabar/catering-fuegos.png"
+      ]
+    }
+  ]
+}

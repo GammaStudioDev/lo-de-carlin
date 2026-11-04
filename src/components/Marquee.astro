@@ -1,0 +1,42 @@
+---
+const items = [
+	'Casamientos',
+	'Fiestas de 15',
+	'Cumpleaños & Aniversarios',
+	'Eventos Corporativos',
+	'Sierras de Tandil',
+	'Fuegos en Vivo',
+	'Cava de Vinos',
+	'Cabina DJ & Pantalla LED',
+	'Coctelería de Autor',
+	'Malabar Itinerante'
+];
+---
+
+<section class="w-full overflow-hidden border-y border-black/15 bg-white py-4 select-none">
+	<div class="flex items-center gap-8 whitespace-nowrap animate-marquee">
+		{items.concat(items).concat(items).map((item) => (
+			<div class="inline-flex items-center gap-8">
+				<span class="text-xs sm:text-sm uppercase tracking-[0.3em] font-light text-black">
+					{item}
+				</span>
+				<span class="text-[10px] text-[#261B14]/60">◆</span>
+			</div>
+		))}
+	</div>
+</section>
+
+<style>
+	@keyframes marquee {
+		0% { transform: translateX(0%); }
+		100% { transform: translateX(-50%); }
+	}
+	.animate-marquee {
+		display: flex;
+		width: max-content;
+		animation: marquee 25s linear infinite;
+	}
+	.animate-marquee:hover {
+		animation-play-state: paused;
+	}
+</style>

@@ -1,0 +1,18 @@
+---
+import Layout from '../layouts/Layout.astro';
+import siteData from '../data/data.json';
+import Location from '../components/Location.astro';
+import Contact from '../components/Contact.astro';
+import PaymentMethods from '../components/PaymentMethods.astro';
+import Quotation from '../components/Quotation.astro';
+import WhatsappButton from '../components/WhatsAppButton.astro';
+
+const { website } = siteData;
+---
+<Layout title={`Contacto & Ubicación | ${website.name}`} description="Contactate con Malabar Eventos en Av. Don Bosco 405, Tandil. Consultas de disponibilidad, cotizaciones y propuestas para eventos sociales y corporativos frente a las sierras.">
+    <Contact headingLevel={1} />
+	<PaymentMethods />
+	<Quotation />
+	<Location />
+	<WhatsappButton hrefWhs={`https://api.whatsapp.com/send?phone=${encodeURIComponent(website.telephone)}&text=${encodeURIComponent('¡Hola Malabar Eventos! Me comunico desde la web para hacer una consulta o solicitar presupuesto.')}`} floating />
+</Layout>

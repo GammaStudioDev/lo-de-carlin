@@ -1,0 +1,55 @@
+---
+interface Props {
+	items?: string[];
+	separator?: string;
+	duration?: number;
+	class?: string;
+}
+
+const {
+	items = [],
+	separator = '/',
+	duration = 25,
+	class: className = '',
+}: Props = Astro.props;
+---
+
+<div class:list={['text-carousel relative overflow-hidden bg-secondary text-white py-3', className]}>
+	<div class="text-carousel-track flex w-max" style={`--marquee-duration: ${duration}s`}>
+		{[0, 1].map((copy) => (
+			<div class="flex shrink-0" aria-hidden={copy === 1 ? 'true' : undefined}>
+				{items.map((item) => (
+					<span class="flex items-center gap-8 px-4 shrink-0 whitespace-nowrap uppercase font-bold tracking-wide text-sm md:text-base">
+						{item}
+						<span aria-hidden="true">{separator}</span>
+					</span>
+				))}
+			</div>
+		))}
+	</div>
+</div>
+
+<style>
+	.text-carousel-track {
+		animation: text-carousel-scroll var(--marquee-duration, 25s) linear infinite;
+	}
+
+	.text-carousel:hover .text-carousel-track {
+		animation-play-state: paused;
+	}
+
+	@keyframes text-carousel-scroll {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-50%);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.text-carousel-track {
+			animation: none;
+		}
+	}
+</style>

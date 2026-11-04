@@ -1,0 +1,35 @@
+---
+interface Props {
+	review: {
+		name: string;
+		rating: number;
+		comment: string;
+		date?: string;
+	};
+}
+
+const { review } = Astro.props;
+const { name, rating, comment, date } = review;
+const initial = name.trim().charAt(0).toUpperCase();
+const stars = [1, 2, 3, 4, 5];
+---
+
+<article class="flex flex-col h-full gap-4 bg-white border border-black/15 p-6 sm:p-7 text-black shadow-sm hover:border-black transition-colors">
+	<div class="flex items-center gap-3">
+		<span class="flex items-center justify-center shrink-0 w-10 h-10 border border-black/20 bg-neutral-50 font-cinzel font-semibold text-black text-sm">
+			{initial}
+		</span>
+		<div class="flex flex-col">
+			<h3 class="font-cinzel font-normal text-sm sm:text-base text-black uppercase tracking-wide">{name}</h3>
+			{date && <span class="text-[11px] text-neutral-400 font-light">{date}</span>}
+		</div>
+	</div>
+	<div class="flex gap-1" role="img" aria-label={`${rating} de 5 estrellas`}>
+		{stars.map((star) => (
+			<svg viewBox="0 0 24 24" stroke-width="1.5" class:list={["w-3.5 h-3.5 stroke-black", star <= rating ? "fill-black" : "fill-none"]} aria-hidden="true">
+				<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" stroke-linecap="square" stroke-linejoin="miter" />
+			</svg>
+		))}
+	</div>
+	<p class="text-xs sm:text-sm text-neutral-600 font-light leading-relaxed flex-1">{comment}</p>
+</article>

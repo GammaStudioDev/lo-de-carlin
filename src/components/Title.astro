@@ -1,0 +1,26 @@
+---
+interface Props {
+	title: string;
+	description?: string;
+	level?: 1 | 2;
+}
+
+const { title, description, level = 2 } = Astro.props;
+const titleClass = "font-cinzel font-light text-3xl sm:text-4xl lg:text-5xl text-black uppercase leading-tight tracking-tight";
+---
+
+<section class="relative w-full overflow-hidden px-6 pt-12 pb-6">
+	<div class="text-center max-w-3xl mx-auto mb-4 animate-fade-in-up">
+		{description && (
+			<span class="inline-block text-neutral-500 font-medium uppercase tracking-[0.3em] text-xs sm:text-sm mb-3">
+				{description}
+			</span>
+		)}
+		{level === 1 ? (
+			<h1 class={titleClass}>{title}</h1>
+		) : (
+			<h2 class={titleClass}>{title}</h2>
+		)}
+		<div class="w-12 h-px bg-black/25 mx-auto my-4"></div>
+	</div>
+</section>

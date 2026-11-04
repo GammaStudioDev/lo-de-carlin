@@ -1,0 +1,56 @@
+@config "../../tailwind.config.mjs";
+@import "tailwindcss";
+@import "tailwind-animations";
+
+@theme {
+	--font-cinzel: "Cinzel", serif;
+	--font-montserrat: "Montserrat", sans-serif;
+	--font-anton: "Anton", sans-serif;
+}
+
+:root {
+	--color-main-value: var(--color-main-light, #FFFFFF);
+	--color-secondary-value: var(--color-secondary-light, #000000);
+	--color-tertiary-value: #FAFAFA;
+	
+	/* White futuristic minimalism with sparse espresso/dark wood accent */
+	--color-surface: #FFFFFF;
+	--color-surface-soft: #F5F5F5;
+	--color-surface-elevated: #EFEFEF;
+	--color-border-subtle: rgba(0, 0, 0, 0.10);
+	--color-border-strong: rgba(0, 0, 0, 0.25);
+	
+	/* Very subtle dark brown detail */
+	--color-brown-subtle: #241A14;
+	--color-brown-border: #3A2B22;
+
+	--background-image-radial-custom: 
+		radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 0, 0, 0.02) 0%, transparent 70%),
+		radial-gradient(ellipse 60% 40% at 90% 80%, rgba(36, 26, 20, 0.03) 0%, transparent 60%);
+}
+
+/* Force sharp edges on all elements for futuristic architectural look */
+*, *::before, *::after {
+	border-radius: 0px !important;
+}
+
+/* Futuristic smooth custom scrollbar */
+::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+::-webkit-scrollbar-track {
+	background: #FFFFFF;
+}
+::-webkit-scrollbar-thumb {
+	background: #D4D4D4;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: #737373;
+}
+
+/* Selection */
+::selection {
+	background-color: #000000;
+	color: #FFFFFF;
+}

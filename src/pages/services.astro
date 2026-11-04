@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/Layout.astro';
+import siteData from '../data/data.json';
+import WhatsappButton from '../components/WhatsAppButton.astro';
+import Category from '../components/Category.astro';
+import SalonAmenities from '../components/SalonAmenities.astro';
+import MenuSection from '../components/MenuSection.astro';
+import PaymentMethods from '../components/PaymentMethods.astro';
+import Financing from '../components/Financing.astro';
+import Quotation from '../components/Quotation.astro';
+
+const { website } = siteData;
+---
+
+<Layout title={`Propuestas de Eventos & Comodidades | ${website.name}`} description="Conocé todas las propuestas de eventos de Malabar Tandil: casamientos, fiestas de 15, cumpleaños, corporativos y servicio itinerante, junto con todas las comodidades de nuestro salón.">
+	<Category />
+	<SalonAmenities />
+	<MenuSection />
+	<PaymentMethods />
+	<Financing />
+	<Quotation />
+	<WhatsappButton hrefWhs={`https://api.whatsapp.com/send?phone=${encodeURIComponent(website.telephone)}&text=${encodeURIComponent('¡Hola Malabar Eventos! Quiero consultar por las propuestas de eventos y disponibilidad de fechas en Tandil.')}`} floating />
+</Layout>

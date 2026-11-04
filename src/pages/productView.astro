@@ -1,0 +1,13 @@
+---
+import siteData from '../data/data.json';
+import productsData from '../data/products.json';
+
+const { products } = productsData;
+const firstProduct = products[0];
+
+if (firstProduct) {
+	return Astro.redirect(`/productView/${firstProduct.id}`);
+}
+
+return Astro.redirect('/catalog');
+---

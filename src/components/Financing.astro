@@ -1,0 +1,56 @@
+---
+import siteData from '../data/data.json';
+import Benefits from './Benefits.astro';
+import Title from './Title.astro';
+import WhatsappButton from './WhatsAppButton.astro';
+
+interface Props {
+	headingLevel?: 1 | 2;
+}
+
+const { headingLevel = 2 } = Astro.props;
+const { website } = siteData;
+
+const benefits = [
+	{
+		title: 'Financiación a Medida',
+		description: 'Aboná tu evento con planes flexibles y facilidades adaptadas a tu presupuesto.',
+		icon: 'percent'
+	},
+	{
+		title: 'Múltiples Monedas & Cripto',
+		description: 'Aceptamos Pesos, Dólares, Euros, Tarjetas, Mercado Pago y Criptomonedas (BTC, ETH, USDT).',
+		icon: 'card'
+	},
+	{
+		title: 'Reserva Rápida & Transparente',
+		description: 'Congelá tu fecha elegida con un anticipo accesible y contrato con total respaldo.',
+		icon: 'clock'
+	},
+	{
+		title: 'Asesoramiento Personalizado',
+		description: 'Armamos la propuesta a la medida exacta de tus expectativas y requerimientos.',
+		icon: 'document'
+	}
+] as const;
+
+const whatsappHref = `https://api.whatsapp.com/send?phone=${encodeURIComponent(website.telephone)}&text=${encodeURIComponent('¡Hola Malabar Eventos! Me gustaría consultar por las opciones de financiación y medios de pago para un evento.')}`;
+---
+
+<Title title="Facilidades & Medios de Pago" description="Opciones flexibles y transparentes para festejar sin preocupaciones" level={headingLevel}/>
+<section class="animate-fade-in-up w-11/12 lg:w-4/5 max-w-7xl mx-auto py-8 text-black">
+	<div class="border border-black/15 bg-white p-8 sm:p-12 shadow-sm">
+		<Benefits items={benefits} />
+		<div class="mt-10 flex justify-center">
+			<a
+				href={whatsappHref}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="inline-flex items-center justify-center gap-3 border border-black bg-black hover:bg-white text-white hover:text-black font-semibold text-xs uppercase tracking-[0.2em] py-4 px-8 transition-all duration-300"
+			>
+				<span>Consultar Planes & Medios de Pago</span>
+				<span>→</span>
+			</a>
+		</div>
+	</div>
+</section>

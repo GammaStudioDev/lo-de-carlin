@@ -1,0 +1,40 @@
+---
+import Hero from '../components/Hero.astro';
+import Marquee from '../components/Marquee.astro';
+import FourReasons from '../components/FourReasons.astro';
+import Highlights from '../components/Highlights.astro';
+import Category from '../components/Category.astro';
+import SalonAmenities from '../components/SalonAmenities.astro';
+import MenuSection from '../components/MenuSection.astro';
+import PaymentMethods from '../components/PaymentMethods.astro';
+import Financing from '../components/Financing.astro';
+import Quotation from '../components/Quotation.astro';
+import Location from '../components/Location.astro';
+import ReviewCard from '../components/ReviewCard.astro';
+import Carousel from '../components/Carousel.astro';
+import Contact from '../components/Contact.astro';
+import Layout from '../layouts/Layout.astro';
+import siteData from '../data/data.json';
+import WhatsappButton from '../components/WhatsAppButton.astro';
+import Title from '../components/Title.astro';
+
+const { reviews, website } = siteData;
+---
+
+<Layout title={`${website.name} | Salón de Eventos en Tandil • Vista a las Sierras`} description={website.description}>
+	<Hero />
+	<Marquee />
+	<FourReasons />
+	<Highlights />
+	<Category />
+	<SalonAmenities />
+	<MenuSection />
+	<PaymentMethods />
+	<Financing />
+	<Quotation />
+	<Location />
+	<Title title="Experiencias que Dejan Huella" description="Testimonios reales en Malabar Eventos Tandil"/>
+	<Carousel items={reviews} Card={ReviewCard} cardProp="review" itemClass="w-72 sm:w-80 lg:w-96" stepSeconds={6} />
+	<Contact />
+	<WhatsappButton hrefWhs={`https://api.whatsapp.com/send?phone=${encodeURIComponent(website.telephone)}&text=${encodeURIComponent('¡Hola Malabar Eventos! Me comunico desde la web para consultar disponibilidad y presupuesto para un evento en Tandil.')}`} floating />
+</Layout>

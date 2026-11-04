@@ -1,0 +1,66 @@
+---
+
+interface Props {
+	pill: string;
+	text: string;
+	highlightedText?: string[];
+}
+
+const {
+	pill,
+	text,
+	highlightedText = [],
+}: Props = Astro.props;
+
+
+import { Image } from 'astro:assets';
+import siteData from '../data/data.json';
+import heroImg from '../assets/hero-img.webp';
+
+const { website } = siteData;
+
+// Un solo split (no uno por highlight, que duplicaba el texto completo por
+// cada término) usando un regex con grupo de captura para conservar los
+// términos resaltados como elementos separados del array.
+const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const textParts = highlightedText.length > 0
+	? text.split(new RegExp(`(${highlightedText.map(escapeRegExp).join('|')})`, 'g'))
+	: [text];
+---
+
+<section class="h-1/2">
+	<Image
+		src={heroImg}
+		alt={`Fachada de ${website.name}`}
+		widths={[640, 1024, 1600, 2000]}
+		sizes="100vw"
+		quality="mid"
+		loading="eager"
+		fetchpriority="high"
+		class="absolute inset-0 w-full h-full object-cover"
+	/>
+	<div class="absolute inset-0 bg-linear-to-tr from-black via-black/60 via-45% to-transparent" aria-hidden="true"></div>
+
+	<div class="relative px-6 md:px-16 lg:px-24 pb-16 md:pb-24 max-w-3xl">
+		<span class="animate-fade-in-up animate-duration-500 text-xs md:text-sm font-bold text-white bg-secondary rounded-full p-1 px-4">{pill}</span>
+		<h1 class="animate-fade-in-up animate-duration-500 animate-delay-100 mt-4 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase leading-[0.95] text-white">
+			{textParts.map((part) =>
+				highlightedText.includes(part) ? <span class="text-secondary font-cinzel font-bold">{part}</span> : part
+			)}
+		</h1>
+		<p class="animate-fade-in-up animate-duration-500 animate-delay-200 mt-6 max-w-md text-base md:text-lg text-white/80">
+			{website.description}
+		</p>
+		<div class="animate-fade-in-up animate-duration-500 animate-delay-300 mt-8 flex flex-wrap gap-4">
+			<a href="/catalog" class="group inline-flex items-center gap-2 rounded-md bg-secondary/70 hover:bg-secondary border-secondary/70 hover:border-white hover:text-500 text-white font-bold uppercase text-sm tracking-wide px-6 py-4 transition-all duration-300">
+				Ver catálogo
+				<svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+					<path d="M4 10h12M12 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+				</svg>
+			</a>
+			<a href="/aboutUs" class="inline-flex items-center rounded-md border border-white hover:bg-white/10 text-white font-bold uppercase text-sm tracking-wide px-6 py-4 transition-colors duration-300">
+				Consulta por WhatsApp
+			</a>
+		</div>
+	</div>
+</section>

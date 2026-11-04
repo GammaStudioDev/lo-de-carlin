@@ -1,0 +1,33 @@
+---
+interface Props {
+	product: {
+		id: number;
+		name: string;
+		price: number;
+		images: string[];
+		stock: boolean;
+	};
+	// False for the looping duplicate copies a Carousel renders alongside the
+	// real card — giving those the same transition:name as the original would
+	// produce duplicate view-transition-name values and silently break the
+	// view transition for every copy.
+	isPrimary?: boolean;
+}
+
+const { product, isPrimary = true } = Astro.props;
+const imageTransitionName = isPrimary ? `product-image-${product.id}` : undefined;
+const nameTransitionName = isPrimary ? `product-name-${product.id}` : undefined;
+const priceTransitionName = isPrimary ? `product-price-${product.id}` : undefined;
+---
+
+<a href={`/productView/${product.id}`} class="flex flex-col h-full bg-secondary/70 backdrop-blur-md pb-4 rounded-xl">
+    <img src={product.images[0]} alt={product.name} loading="lazy" transition:name={imageTransitionName} class:list={["w-full h-auto aspect-square object-cover rounded-t-xl", { grayscale: !product.stock }]} />
+    <footer class="flex flex-col flex-1 items-center justify-center mt-2">
+        <h2 class="text-base md:text-xl font-bold mt-2 text-center" transition:name={nameTransitionName}>{product.name}</h2>
+        {product.stock ? (
+            <p class="text-sm md:text-base text-main font-semibold mt-2" transition:name={priceTransitionName}>${product.price}</p>
+        ) : (
+            <p class="text-sm md:text-base text-main/60 font-semibold mt-2" transition:name={priceTransitionName}>Sin Stock</p>
+        )}
+    </footer>
+</a>

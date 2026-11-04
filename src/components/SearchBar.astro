@@ -1,0 +1,94 @@
+---
+import { getImage } from 'astro:assets';
+import siteData from '../data/data.json';
+import productsData from '../data/products.json';
+
+const { filters } = siteData;
+const { products: productos } = productsData;
+
+// Trimmed-down index for the client script: only what the dropdown needs,
+// plus a 48px-display thumbnail (96 for 2x) instead of the full-resolution
+// source image.
+const searchIndex = await Promise.all(
+	productos.map(async (item) => {
+		const thumb = await getImage({ src: item.images[0], width: 96, height: 96, fit: 'cover', format: 'webp' });
+		return { id: item.id, name: item.name, description: item.description, price: item.price, thumb: thumb.src };
+	})
+);
+---
+
+<div class="relative w-11/12 lg:w-3/4 mx-auto mt-6">
+  <input
+    type="search"
+    id="search-input"
+    placeholder="Buscar productos por nombre..."
+    autocomplete="off"
+    class="w-full rounded-full bg-white dark:bg-neutral-900 text-neutral-950 dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-500 pl-6 pr-12 py-3 outline-none ring-1 ring-neutral-900/10 dark:ring-white/10 focus:ring-secondary/50 transition-colors duration-300"
+  />
+
+  <button
+    type="button"
+    id="filter-toggle"
+    aria-label="Filtros"
+    aria-expanded="false"
+    class="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-full text-neutral-950 dark:text-white hover:bg-secondary/10 hover:text-secondary dark:hover:bg-secondary/15 transition-colors duration-300"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <circle cx="9" cy="6" r="2" fill="currentColor" stroke="none" />
+      <line x1="4" y1="12" x2="20" y2="12" />
+      <circle cx="15" cy="12" r="2" fill="currentColor" stroke="none" />
+      <line x1="4" y1="18" x2="20" y2="18" />
+      <circle cx="7" cy="18" r="2" fill="currentColor" stroke="none" />
+    </svg>
+  </button>
+
+  <ul id="filter-menu" class="hidden absolute top-full right-0 z-30 mt-2 w-48 rounded-xl bg-white dark:bg-neutral-900 ring-1 ring-neutral-900/10 dark:ring-white/10 shadow-lg overflow-hidden divide-y divide-neutral-900/10 dark:divide-white/10">
+    {filters.map((filter) => (
+      <li>
+        <a href={`/search?filter=${encodeURIComponent(filter)}`} class="block w-full px-4 py-2 text-neutral-950 dark:text-white hover:bg-secondary/10 hover:text-secondary dark:hover:bg-secondary/15 transition-colors duration-300">
+          {filter}
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  <ul id="results-list" class="empty:hidden absolute top-full inset-x-0 z-20 mt-2 rounded-xl bg-white dark:bg-neutral-900 ring-1 ring-neutral-900/10 dark:ring-white/10 shadow-lg overflow-hidden divide-y divide-neutral-900/10 dark:divide-white/10"></ul>
+</div>
+
+<script type="application/json" id="search-data" is:inline set:html={JSON.stringify(searchIndex)} />
+<script src="../scripts/searchbar.client.js"></script>
+
+<style is:global>
+  @keyframes search-result-slide-down {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .search-result-item {
+    animation: search-result-slide-down 0.25s ease-out both;
+  }
+
+  /* Botón nativo "X" de los input type=search (Chrome/Edge), coloreado en primario */
+  #search-input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    margin-left: 8px;
+    cursor: pointer;
+    background-color: var(--color-main-value);
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'/%3E%3Cline x1='6' y1='6' x2='18' y2='18'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'/%3E%3Cline x1='6' y1='6' x2='18' y2='18'/%3E%3C/svg%3E");
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+  }
+</style>

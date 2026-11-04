@@ -1,0 +1,20 @@
+---
+import { getImage } from 'astro:assets';
+
+interface Props {
+	name: string;
+	image: string;
+}
+
+const { name, image } = Astro.props;
+
+// Cards sit in a 2/4-col grid within a 2/3-width section — 480 covers the
+// largest rendered size at 2x pixel density.
+const cardImage = await getImage({ src: image, width: 480, height: 480, fit: 'cover', format: 'webp' });
+---
+
+<a href={`/search?filter=${encodeURIComponent(name)}`} class="group relative flex items-center justify-center aspect-square overflow-hidden rounded-xl bg-neutral-100 dark:bg-neutral-800 ring-1 ring-neutral-900/10 dark:ring-white/10">
+	<img src={cardImage.src} width="480" height="480" alt={name} loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110" />
+	<div class="absolute inset-0 bg-secondary/40 group-hover:bg-secondary/55 transition-colors duration-300"></div>
+	<h2 class="relative text-white md:text-xl font-bold text-center px-2">{name}</h2>
+</a>

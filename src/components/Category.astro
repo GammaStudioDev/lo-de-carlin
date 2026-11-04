@@ -1,0 +1,24 @@
+---
+import ServiceCard from './ServiceCard.astro';
+import productsData from '../data/products.json';
+import Title from './Title.astro';
+
+const { products } = productsData;
+---
+
+<section id="services" class="w-11/12 lg:w-4/5 max-w-7xl mx-auto py-16 lg:py-24 text-black">
+	<!-- Encabezado de la sección -->
+	<Title title="Propuestas de Eventos" description="Casamientos, Fiestas de 15, Cumpleaños, Eventos Corporativos & Servicio Itinerante en Tandil"/>
+
+	<!-- Grilla de tarjetas de servicios sin bordes redondeados -->
+	<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
+		{products.map((service, index) => (
+			<div
+				class="animate-fade-in-up animate-duration-500 flex"
+				style={`animation-delay: ${index * 100}ms;`}
+			>
+				<ServiceCard product={service} />
+			</div>
+		))}
+	</div>
+</section>
