@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+import siteData from '../data/data.json';
+import PageHeader from '../components/PageHeader.astro';
+import Gallery from '../components/Gallery.astro';
+import Statement from '../components/Statement.astro';
+import Contact from '../components/Contact.astro';
+import InstagramButton from '../components/InstagramButton.astro';
+
+const { website } = siteData;
+---
+
+<Layout title={`Galería | ${website.name}`} description={`Fotos del salón, el parque y eventos en ${website.name}, ${website.city}.`} image="/images/lodecarlin/catering.jpg">
+	<PageHeader
+		index="03"
+		eyebrow="Galería"
+		title="Así se vive | Lo de Carlin."
+		description="Algunos momentos del salón, el parque y las mesas. Tocá una foto para verla en grande."
+	>
+		<a data-hero-fade href={website.instagram} target="_blank" rel="noopener noreferrer" class="mt-8 inline-flex items-center gap-2 rounded-full border border-secondary/25 px-6 py-3.5 text-sm font-semibold text-secondary transition-colors hover:border-secondary">
+			Seguinos en {website.instagramHandle}
+		</a>
+	</PageHeader>
+	<div class="-mt-16 sm:-mt-24"><Gallery showTitle={false} /></div>
+	<Statement text="Cada evento es distinto. Las mejores fotos las van a sacar tus invitados." />
+	<Contact />
+	<InstagramButton />
+</Layout>

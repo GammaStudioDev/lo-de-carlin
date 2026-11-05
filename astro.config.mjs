@@ -11,6 +11,13 @@ export default defineConfig({
   // sitio — de este valor dependen el sitemap y las URLs canónicas/og:url.
   site: 'https://www.automotoresdelmolino.com.ar',
 
+  redirects: {
+    '/aboutUs': '/nosotros',
+    '/contact': '/contacto',
+    '/services': '/eventos',
+    '/productView': '/eventos'
+  },
+
   image: {
     domains: ['http2.mlstatic.com', 'picsum.photos', 'fastly.picsum.photos']
   },

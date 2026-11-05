@@ -1,0 +1,50 @@
+---
+interface Props {
+	eyebrow: string;
+	title: string;
+	description?: string;
+	images?: { src: string; alt: string }[];
+	index?: string;
+}
+
+const { eyebrow, title, description, images = [], index } = Astro.props;
+const lines = title.split('|');
+---
+
+<section data-hero class="relative w-full overflow-hidden">
+	<div class="mx-auto max-w-7xl px-4 pb-14 pt-12 sm:px-8 sm:pb-20 sm:pt-20">
+		<div class="flex items-center justify-between gap-6">
+			<p data-hero-fade class="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.25em] text-secondary/60">
+				<span class="h-px w-8 bg-secondary/40"></span>
+				{eyebrow}
+			</p>
+			{index && <span data-hero-fade class="font-display text-sm font-semibold text-secondary/40">{index}</span>}
+		</div>
+
+		<h1 class="mt-6 font-display text-5xl font-extrabold leading-[0.95] tracking-tight text-secondary sm:text-7xl lg:text-8xl">
+			{lines.map((line, i) => (
+				<span data-hero-line class="block overflow-hidden pb-2">
+					<span class:list={['block', i % 2 === 1 && 'text-secondary/45']}>{line.trim()}</span>
+				</span>
+			))}
+		</h1>
+
+		{description && (
+			<p data-hero-fade class="mt-8 max-w-xl text-lg leading-relaxed text-secondary/70">{description}</p>
+		)}
+
+		<slot />
+
+		{images.length > 0 && (
+			<div class="mt-14 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3">
+				{images.map((img, i) => (
+					<div data-hero-img class:list={['overflow-hidden rounded-[1.25rem]', i === 0 && 'col-span-2 md:col-span-1', i === 1 && 'md:translate-y-10']}>
+						<div data-parallax={String(0.08 + i * 0.04)} class="h-full w-full">
+							<img src={img.src} alt={img.alt} loading="eager" class="h-64 w-full scale-110 object-cover sm:h-80 md:h-[24rem]" />
+						</div>
+					</div>
+				))}
+			</div>
+		)}
+	</div>
+</section>

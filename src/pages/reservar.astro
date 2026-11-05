@@ -1,0 +1,366 @@
+---
+import Layout from '../layouts/Layout.astro';
+import siteData from '../data/data.json';
+import productsData from '../data/products.json';
+
+const { website } = siteData;
+const eventTypes = [...productsData.products.map((p) => p.name), 'Otro'];
+const times = ['Mediodía', 'Tarde', 'Noche'];
+const guests = ['Hasta 30', '30 a 60', '60 a 100', 'Más de 100', 'Todavía no sé'];
+const services = ['Salón', 'Parque', 'Catering', 'Mesa dulce'];
+const whatsapp = website.telephone ? `https://wa.me/${website.telephone.replace(/\D/g, '')}` : '';
+
+const stepLabels = ['Evento', 'Fecha', 'Invitados', 'Servicios', 'Tus datos', 'Listo'];
+
+const chip = 'peer-checked:border-secondary peer-checked:bg-secondary peer-checked:text-main peer-focus-visible:ring-2 peer-focus-visible:ring-secondary/40';
+---
+
+<Layout title={`Reservar | ${website.name}`} description={`Armá tu consulta de reserva en ${website.name}: tipo de evento, fecha, invitados y servicios. Te respondemos con disponibilidad.`}>
+	<section data-hero class="mx-auto w-full max-w-7xl px-4 pb-24 pt-10 sm:px-8 sm:pt-16">
+		<div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+			<!-- Columna izquierda -->
+			<aside class="lg:col-span-4">
+				<div class="lg:sticky lg:top-28">
+					<p data-hero-fade class="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.25em] text-secondary/60">
+						<span class="h-px w-8 bg-secondary/40"></span>
+						Reservar
+					</p>
+					<h1 class="mt-5 font-display text-5xl font-extrabold leading-[0.95] tracking-tight sm:text-6xl">
+						<span data-hero-line class="block overflow-hidden pb-1"><span class="block">Armá tu</span></span>
+						<span data-hero-line class="block overflow-hidden pb-1"><span class="block text-secondary/45">reserva.</span></span>
+					</h1>
+					<p data-hero-fade class="mt-6 max-w-sm leading-relaxed text-secondary/70">
+						Respondé unas preguntas rápidas y te armamos un resumen listo para enviarnos. Te contestamos con disponibilidad y propuesta.
+					</p>
+
+					<ol data-hero-fade class="mt-10 hidden flex-col gap-3 lg:flex" id="step-list">
+						{stepLabels.map((label, i) => (
+							<li data-step-label={i} class="flex items-center gap-3 text-sm text-secondary/40 transition-colors data-[state=active]:text-secondary data-[state=done]:text-secondary/70">
+								<span class="flex h-7 w-7 items-center justify-center rounded-full border border-current font-display text-xs font-semibold">{i + 1}</span>
+								{label}
+							</li>
+						))}
+					</ol>
+				</div>
+			</aside>
+
+			<!-- Formulario -->
+			<div class="lg:col-span-8">
+				<div data-hero-img class="overflow-hidden rounded-[1.5rem] bg-tertiary/60 p-6 sm:p-10">
+					<!-- Progreso -->
+					<div class="flex items-center justify-between text-xs font-medium uppercase tracking-[0.2em] text-secondary/55">
+						<span>Paso <span id="step-current">1</span> de {stepLabels.length - 1}</span>
+						<span id="step-name">{stepLabels[0]}</span>
+					</div>
+					<div class="mt-3 h-1 overflow-hidden rounded-full bg-secondary/10">
+						<div id="progress-bar" class="h-full w-full origin-left scale-x-0 rounded-full bg-secondary"></div>
+					</div>
+
+					<form id="booking-form" class="relative mt-10" novalidate>
+						<!-- 1. Evento -->
+						<fieldset data-step="0" class="step">
+							<legend class="font-display text-3xl font-bold tracking-tight sm:text-4xl">¿Qué querés celebrar?</legend>
+							<div class="mt-8 grid gap-3 sm:grid-cols-2">
+								{eventTypes.map((type, i) => (
+									<label class="cursor-pointer">
+										<input type="radio" name="evento" value={type} class="peer sr-only" required />
+										<span class:list={['flex items-center justify-between rounded-2xl border border-secondary/15 bg-main px-5 py-4 font-display text-lg font-semibold transition-all hover:border-secondary/50', chip]}>
+											{type}
+											<span class="text-xs font-medium opacity-50">0{i + 1}</span>
+										</span>
+									</label>
+								))}
+							</div>
+							<input type="text" name="eventoOtro" placeholder="Contanos qué evento es" class="mt-3 hidden w-full rounded-2xl border border-secondary/15 bg-main px-5 py-4 outline-none focus:border-secondary" />
+						</fieldset>
+
+						<!-- 2. Fecha -->
+						<fieldset data-step="1" class="step hidden">
+							<legend class="font-display text-3xl font-bold tracking-tight sm:text-4xl">¿Para cuándo?</legend>
+							<label class="mt-8 block">
+								<span class="text-xs font-medium uppercase tracking-[0.2em] text-secondary/60">Fecha tentativa</span>
+								<input type="date" name="fecha" class="mt-2 w-full rounded-2xl border border-secondary/15 bg-main px-5 py-4 text-lg outline-none focus:border-secondary" />
+							</label>
+							<label class="mt-4 inline-flex cursor-pointer items-center gap-3 text-sm text-secondary/75">
+								<input type="checkbox" name="fechaFlexible" class="h-5 w-5 accent-[var(--color-secondary-value)]" />
+								Tengo flexibilidad / todavía no definí la fecha
+							</label>
+							<p class="mt-8 text-xs font-medium uppercase tracking-[0.2em] text-secondary/60">Horario</p>
+							<div class="mt-3 flex flex-wrap gap-3">
+								{times.map((t) => (
+									<label class="cursor-pointer">
+										<input type="radio" name="horario" value={t} class="peer sr-only" />
+										<span class:list={['inline-flex rounded-full border border-secondary/15 bg-main px-5 py-3 text-sm font-medium transition-all hover:border-secondary/50', chip]}>{t}</span>
+									</label>
+								))}
+							</div>
+						</fieldset>
+
+						<!-- 3. Invitados -->
+						<fieldset data-step="2" class="step hidden">
+							<legend class="font-display text-3xl font-bold tracking-tight sm:text-4xl">¿Cuántos invitados?</legend>
+							<p class="mt-3 text-secondary/65">Un número aproximado alcanza.</p>
+							<div class="mt-8 flex flex-wrap gap-3">
+								{guests.map((g) => (
+									<label class="cursor-pointer">
+										<input type="radio" name="invitados" value={g} class="peer sr-only" required />
+										<span class:list={['inline-flex rounded-full border border-secondary/15 bg-main px-6 py-4 font-display text-lg font-semibold transition-all hover:border-secondary/50', chip]}>{g}</span>
+									</label>
+								))}
+							</div>
+						</fieldset>
+
+						<!-- 4. Servicios -->
+						<fieldset data-step="3" class="step hidden">
+							<legend class="font-display text-3xl font-bold tracking-tight sm:text-4xl">¿Qué te interesa?</legend>
+							<p class="mt-3 text-secondary/65">Podés elegir varias opciones.</p>
+							<div class="mt-8 grid grid-cols-2 gap-3">
+								{services.map((s) => (
+									<label class="cursor-pointer">
+										<input type="checkbox" name="servicios" value={s} class="peer sr-only" />
+										<span class:list={['flex h-24 items-end rounded-2xl border border-secondary/15 bg-main p-5 font-display text-xl font-semibold transition-all hover:border-secondary/50', chip]}>{s}</span>
+									</label>
+								))}
+							</div>
+						</fieldset>
+
+						<!-- 5. Datos -->
+						<fieldset data-step="4" class="step hidden">
+							<legend class="font-display text-3xl font-bold tracking-tight sm:text-4xl">Por último, ¿quién sos?</legend>
+							<div class="mt-8 grid gap-4 sm:grid-cols-2">
+								<label class="block">
+									<span class="text-xs font-medium uppercase tracking-[0.2em] text-secondary/60">Nombre *</span>
+									<input type="text" name="nombre" autocomplete="name" required class="mt-2 w-full rounded-2xl border border-secondary/15 bg-main px-5 py-4 outline-none focus:border-secondary" />
+								</label>
+								<label class="block">
+									<span class="text-xs font-medium uppercase tracking-[0.2em] text-secondary/60">Teléfono (opcional)</span>
+									<input type="tel" name="telefono" autocomplete="tel" class="mt-2 w-full rounded-2xl border border-secondary/15 bg-main px-5 py-4 outline-none focus:border-secondary" />
+								</label>
+								<label class="block sm:col-span-2">
+									<span class="text-xs font-medium uppercase tracking-[0.2em] text-secondary/60">Comentarios (opcional)</span>
+									<textarea name="comentarios" rows="4" placeholder="Temática, ideas, dudas…" class="mt-2 w-full resize-none rounded-2xl border border-secondary/15 bg-main px-5 py-4 outline-none focus:border-secondary"></textarea>
+								</label>
+							</div>
+						</fieldset>
+
+						<!-- 6. Resumen -->
+						<div data-step="5" class="step hidden">
+							<div class="flex h-14 w-14 items-center justify-center rounded-full bg-secondary text-main">
+								<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m5 13 4 4L19 7" /></svg>
+							</div>
+							<h2 class="mt-6 font-display text-3xl font-bold tracking-tight sm:text-4xl">¡Tu consulta está lista!</h2>
+							<p class="mt-3 max-w-lg text-secondary/70">
+								Al tocar el botón copiamos el resumen y abrimos nuestro Instagram. Solo pegalo en el chat y envialo.
+							</p>
+							<pre id="summary" class="mt-8 whitespace-pre-wrap rounded-2xl border border-secondary/10 bg-main p-6 font-sans text-sm leading-relaxed text-secondary/85"></pre>
+							<div class="mt-8 flex flex-wrap gap-3">
+								<a id="send-ig" href={website.instagramDM} target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-3 rounded-full bg-secondary py-2 pl-6 pr-2 text-sm font-semibold text-main">
+									Copiar y abrir Instagram
+									<span class="flex h-10 w-10 items-center justify-center rounded-full bg-main text-secondary transition-transform duration-500 group-hover:-rotate-45">
+										<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6" /></svg>
+									</span>
+								</a>
+								{whatsapp && (
+									<a id="send-wa" href={whatsapp} data-base={whatsapp} target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-full border border-secondary/25 px-6 py-[1.05rem] text-sm font-semibold text-secondary hover:border-secondary">
+										Enviar por WhatsApp
+									</a>
+								)}
+								<button type="button" id="copy-only" class="inline-flex items-center rounded-full border border-secondary/25 px-6 py-[1.05rem] text-sm font-semibold text-secondary hover:border-secondary">
+									Solo copiar
+								</button>
+							</div>
+							<p id="copy-toast" class="mt-4 text-sm font-medium text-secondary opacity-0" role="status" aria-live="polite">Resumen copiado ✓</p>
+						</div>
+
+						<p id="step-error" class="mt-6 hidden text-sm font-medium text-red-700" role="alert"></p>
+
+						<!-- Navegación -->
+						<div id="step-nav" class="mt-10 flex items-center justify-between gap-4 border-t border-secondary/10 pt-6">
+							<button type="button" id="prev-step" class="invisible inline-flex items-center gap-2 text-sm font-semibold text-secondary/70 hover:text-secondary">
+								<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5m6 6-6-6 6-6" /></svg>
+								Atrás
+							</button>
+							<button type="submit" id="next-step" class="inline-flex items-center gap-2 rounded-full bg-secondary px-7 py-3.5 text-sm font-semibold text-main transition-opacity hover:opacity-90">
+								<span id="next-label">Siguiente</span>
+								<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6" /></svg>
+							</button>
+						</div>
+						<button type="button" id="restart" class="mt-8 hidden text-sm font-medium text-secondary/60 underline underline-offset-4 hover:text-secondary">Empezar de nuevo</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+</Layout>
+
+<script>
+	import { gsap } from 'gsap';
+
+	const LABELS = ['Evento', 'Fecha', 'Invitados', 'Servicios', 'Tus datos', 'Listo'];
+
+	document.addEventListener('astro:page-load', () => {
+		const form = document.getElementById('booking-form');
+		if (!(form instanceof HTMLFormElement)) return;
+
+		const steps = Array.from(form.querySelectorAll<HTMLElement>('.step'));
+		const last = steps.length - 1;
+		const bar = document.getElementById('progress-bar')!;
+		const prev = document.getElementById('prev-step')!;
+		const nextLabel = document.getElementById('next-label')!;
+		const nav = document.getElementById('step-nav')!;
+		const restart = document.getElementById('restart')!;
+		const error = document.getElementById('step-error')!;
+		const summaryEl = document.getElementById('summary')!;
+		const toast = document.getElementById('copy-toast')!;
+		const otro = form.querySelector<HTMLInputElement>('[name="eventoOtro"]')!;
+		const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		let current = 0;
+
+		const val = (name: string) => (form.elements.namedItem(name) as RadioNodeList | HTMLInputElement | null)?.value?.trim() || '';
+		const checked = (name: string) => Array.from(form.querySelectorAll<HTMLInputElement>(`[name="${name}"]:checked`)).map((i) => i.value);
+
+		form.querySelectorAll<HTMLInputElement>('[name="evento"]').forEach((r) =>
+			r.addEventListener('change', () => {
+				otro.classList.toggle('hidden', val('evento') !== 'Otro');
+				if (val('evento') === 'Otro') otro.focus();
+			})
+		);
+
+		const formatDate = (iso: string) => {
+			if (!iso) return '';
+			const [y, m, d] = iso.split('-');
+			return `${d}/${m}/${y}`;
+		};
+
+		const buildSummary = () => {
+			const evento = val('evento') === 'Otro' ? otro.value.trim() || 'Otro' : val('evento');
+			const flexible = (form.elements.namedItem('fechaFlexible') as HTMLInputElement).checked;
+			const fecha = val('fecha')
+				? `${formatDate(val('fecha'))}${flexible ? ' (tengo flexibilidad)' : ''}`
+				: 'A definir, tengo flexibilidad';
+			const lines = [
+				`¡Hola Lo de Carlin! Quiero consultar por una reserva:`,
+				``,
+				`• Evento: ${evento}`,
+				`• Fecha: ${fecha}`,
+				`• Horario: ${val('horario') || 'A definir'}`,
+				`• Invitados: ${val('invitados')}`,
+				`• Me interesa: ${checked('servicios').join(', ') || 'A definir'}`,
+				`• Nombre: ${val('nombre')}`,
+			];
+			if (val('telefono')) lines.push(`• Teléfono: ${val('telefono')}`);
+			if (val('comentarios')) lines.push(``, `Comentarios: ${val('comentarios')}`);
+			return lines.join('\n');
+		};
+
+		const validate = (i: number): string => {
+			if (i === 0 && !val('evento')) return 'Elegí un tipo de evento para continuar.';
+			if (i === 0 && val('evento') === 'Otro' && !otro.value.trim()) return 'Contanos qué tipo de evento es.';
+			if (i === 1) {
+				const flexible = (form.elements.namedItem('fechaFlexible') as HTMLInputElement).checked;
+				if (!val('fecha') && !flexible) return 'Elegí una fecha o marcá que tenés flexibilidad.';
+				if (val('fecha') && new Date(val('fecha') + 'T23:59') < new Date()) return 'La fecha no puede ser anterior a hoy.';
+			}
+			if (i === 2 && !val('invitados')) return 'Elegí una cantidad aproximada de invitados.';
+			if (i === 4 && !val('nombre')) return 'Decinos tu nombre para poder responderte.';
+			return '';
+		};
+
+		const render = (dir = 1) => {
+			steps.forEach((s, i) => s.classList.toggle('hidden', i !== current));
+			const total = last;
+			document.getElementById('step-current')!.textContent = String(Math.min(current + 1, total));
+			document.getElementById('step-name')!.textContent = LABELS[current];
+			prev.classList.toggle('invisible', current === 0 || current === last);
+			nav.classList.toggle('hidden', current === last);
+			restart.classList.toggle('hidden', current !== last);
+			nextLabel.textContent = current === last - 1 ? 'Ver resumen' : 'Siguiente';
+			document.querySelectorAll<HTMLElement>('[data-step-label]').forEach((li) => {
+				const idx = Number(li.dataset.stepLabel);
+				li.dataset.state = idx === current ? 'active' : idx < current ? 'done' : '';
+			});
+			if (current === last) summaryEl.textContent = buildSummary();
+
+			const progress = current / total;
+			if (reduced) {
+				bar.style.transform = `scaleX(${progress})`;
+				return;
+			}
+			gsap.to(bar, { scaleX: progress, duration: 0.8, ease: 'expo.out' });
+			const el = steps[current];
+			gsap.fromTo(el, { opacity: 0, x: 40 * dir }, { opacity: 1, x: 0, duration: 0.6, ease: 'expo.out' });
+			gsap.fromTo(el.querySelectorAll('label, legend, h2, pre, a, button'), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.04, ease: 'power3.out', delay: 0.05 });
+		};
+
+		const showError = (msg: string) => {
+			error.textContent = msg;
+			error.classList.toggle('hidden', !msg);
+			if (msg && !reduced) gsap.fromTo(steps[current], { x: -8 }, { x: 0, duration: 0.5, ease: 'elastic.out(1, 0.3)' });
+		};
+
+		form.addEventListener('submit', (e) => {
+			e.preventDefault();
+			const msg = validate(current);
+			showError(msg);
+			if (msg || current >= last) return;
+			current++;
+			render(1);
+			const card = form.closest<HTMLElement>('[data-hero-img]');
+			if (card && card.getBoundingClientRect().top < 80) {
+				window.scrollTo({ top: card.getBoundingClientRect().top + window.scrollY - 96, behavior: reduced ? 'auto' : 'smooth' });
+			}
+		});
+
+		prev.addEventListener('click', () => {
+			showError('');
+			if (current > 0) {
+				current--;
+				render(-1);
+			}
+		});
+
+		restart.addEventListener('click', () => {
+			form.reset();
+			otro.classList.add('hidden');
+			current = 0;
+			render(-1);
+		});
+
+		// Copia sincrónica (funciona aunque se abra otra pestaña) + Clipboard API como respaldo
+		const copy = (text: string) => {
+			const ta = document.createElement('textarea');
+			ta.value = text;
+			ta.setAttribute('readonly', '');
+			ta.style.position = 'fixed';
+			ta.style.opacity = '0';
+			document.body.appendChild(ta);
+			ta.select();
+			let ok = false;
+			try {
+				ok = document.execCommand('copy');
+			} catch {
+				ok = false;
+			}
+			ta.remove();
+			if (!ok) navigator.clipboard?.writeText(text).catch(() => {});
+			toast.style.opacity = '1';
+			setTimeout(() => (toast.style.opacity = '0'), 3000);
+		};
+
+		document.getElementById('send-ig')?.addEventListener('click', () => copy(buildSummary()));
+		document.getElementById('copy-only')?.addEventListener('click', () => copy(buildSummary()));
+		const wa = document.getElementById('send-wa') as HTMLAnchorElement | null;
+		wa?.addEventListener('click', () => {
+			wa.href = `${wa.dataset.base}?text=${encodeURIComponent(buildSummary())}`;
+		});
+
+		// fecha mínima: hoy
+		const dateInput = form.querySelector<HTMLInputElement>('[name="fecha"]');
+		if (dateInput) {
+			const t = new Date();
+			dateInput.min = `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')}`;
+		}
+
+		render(1);
+	});
+</script>

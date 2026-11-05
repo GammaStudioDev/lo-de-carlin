@@ -3,10 +3,10 @@ import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import NavBar from '../components/NavBar.astro';
 import Footer from '../components/Footer.astro';
-import siteData from '../data/data.json'; 
+import siteData from '../data/data.json';
 
 const { website, colors } = siteData;
-const themeVars = `--color-main-light:${colors.primary};--color-secondary-light:${colors.secondary};--color-main-dark:${colors.primaryDark};--color-secondary-dark:${colors.secondaryDark};`;
+const themeVars = `--color-main-light:${colors.primary};--color-secondary-light:${colors.secondary};--color-main-dark:${colors.primaryDark};--color-secondary-dark:${colors.secondaryDark};--color-accent:${colors.accent};`;
 
 interface Props {
 	title?: string;
@@ -15,76 +15,58 @@ interface Props {
 }
 
 const {
-	title = `${website.name} | Salón de Eventos en Tandil • Vista a las Sierras`,
+	title = `${website.name} | Salón de Eventos en ${website.city}, ${website.province}`,
 	description = website.description,
-	image = '/images/malabar/exterior-sierras.png'
+	image = '/images/lodecarlin/salon-exterior.jpg'
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
 const imageURL = new URL(image, Astro.site ?? Astro.url.origin).href;
 
 const schemaData = {
-	"@context": "https://schema.org",
-	"@type": "EventVenue",
-	"name": website.name,
-	"description": website.description,
-	"url": canonicalURL.href,
-	"telephone": website.telephone,
-	"image": imageURL,
-	"address": {
-		"@type": "PostalAddress",
-		"streetAddress": "Av. Don Bosco 405",
-		"addressLocality": "Tandil",
-		"addressRegion": "Buenos Aires",
-		"postalCode": "B7000",
-		"addressCountry": "AR"
+	'@context': 'https://schema.org',
+	'@type': 'EventVenue',
+	name: website.name,
+	description: website.description,
+	url: canonicalURL.href,
+	image: imageURL,
+	hasMap: website.ubication,
+	sameAs: [website.instagram].filter(Boolean),
+	address: {
+		'@type': 'PostalAddress',
+		addressLocality: website.city,
+		addressRegion: website.province,
+		addressCountry: 'AR'
 	},
-	"geo": {
-		"@type": "GeoCoordinates",
-		"latitude": -37.352,
-		"longitude": -59.136
-	},
-	"amenityFeature": [
-		{ "@type": "LocationFeatureSpecification", "name": "Vista panorámica a las sierras", "value": true },
-		{ "@type": "LocationFeatureSpecification", "name": "Cava de vinos exclusiva", "value": true },
-		{ "@type": "LocationFeatureSpecification", "name": "Fogoneros & Asado criollo en vivo", "value": true },
-		{ "@type": "LocationFeatureSpecification", "name": "Cabina de DJ & Pantalla LED", "value": true },
-		{ "@type": "LocationFeatureSpecification", "name": "Barra de tragos & Coctelería de autor", "value": true },
-		{ "@type": "LocationFeatureSpecification", "name": "Servicio de eventos itinerante", "value": true },
-		{ "@type": "LocationFeatureSpecification", "name": "Estacionamiento privado seguro", "value": true }
-	],
-	"aggregateRating": {
-		"@type": "AggregateRating",
-		"ratingValue": website.rating,
-		"bestRating": "5",
-		"worstRating": "1",
-		"ratingCount": String(website.reviewsCount)
-	}
+	amenityFeature: [
+		{ '@type': 'LocationFeatureSpecification', name: 'Salón de eventos', value: true },
+		{ '@type': 'LocationFeatureSpecification', name: 'Parque al aire libre', value: true },
+		{ '@type': 'LocationFeatureSpecification', name: 'Catering y mesa dulce', value: true }
+	]
 };
 ---
 <!doctype html>
-<html lang="es" style={themeVars} class="bg-white text-neutral-900">
+<html lang="es" style={themeVars} class="bg-main text-secondary">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="theme-color" content={colors.primary} />
 		<link rel="icon" type="image/png" href="/logo.png" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="apple-touch-icon" href="/logo.png" />
 		<meta name="generator" content={Astro.generator} />
 		<link rel="canonical" href={canonicalURL} />
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Montserrat:ital,wght@0,300..800;1,300..800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
-		
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+
 		<title>{title}</title>
 		<meta name="description" content={description} />
-		<meta name="keywords" content="Malabar Eventos, Malabar Tandil, salón de eventos Tandil, salón de fiestas Tandil, casamientos Tandil, fiestas de 15 Tandil, eventos en las sierras, vista a las sierras Tandil, cava de vinos Tandil, asado al fuego Tandil, cabina DJ Tandil, pantalla LED Tandil, eventos itinerantes Tandil, Av Don Bosco Tandil" />
-		<meta name="geo.region" content="AR-B" />
-		<meta name="geo.placename" content="Tandil" />
-		<meta name="geo.position" content="-37.352;-59.136" />
-		<meta name="ICBM" content="-37.352, -59.136" />
+		<meta name="keywords" content="Lo de Carlin, salón de eventos Cipolletti, salón de fiestas Cipolletti, cumpleaños Cipolletti, casamientos Cipolletti, aniversarios, capacitaciones, eventos Río Negro, salón con parque Cipolletti" />
+		<meta name="geo.region" content="AR-R" />
+		<meta name="geo.placename" content={website.city} />
 
-		<!-- Open Graph / Facebook -->
+		<!-- Open Graph -->
 		<meta property="og:type" content="website" />
 		<meta property="og:locale" content="es_AR" />
 		<meta property="og:url" content={canonicalURL} />
@@ -95,21 +77,25 @@ const schemaData = {
 
 		<!-- Twitter -->
 		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:url" content={canonicalURL} />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={imageURL} />
 
-		<!-- Schema.org JSON-LD EventVenue -->
 		<script is:inline type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+
+		<noscript><style>[data-anim],[data-hero]{opacity:1!important}</style></noscript>
 
 		<ClientRouter />
 	</head>
-	<body class="bg-white text-neutral-900 min-h-screen flex flex-col font-montserrat antialiased selection:bg-black selection:text-white">
+	<body class="bg-main text-secondary min-h-screen flex flex-col font-sans antialiased">
 		<NavBar />
 		<main id="page-transition-root" class="flex-1 flex flex-col">
 			<slot />
 		</main>
 		<Footer />
+
+		<script>
+			import '../scripts/animations.ts';
+		</script>
 	</body>
 </html>

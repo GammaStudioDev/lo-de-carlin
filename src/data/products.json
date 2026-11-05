@@ -2,119 +2,107 @@
   "products": [
     {
       "id": 1,
-      "name": "Casamientos & Bodas en las Sierras",
-      "description": "Una boda irrepetible con el marco imponente de las sierras de Tandil. Ceremonias al atardecer en el parque exterior, recepciones al aire libre iluminadas con faroles, asado criollo al pie del fogonero, barra de autor y fiesta hasta el amanecer con DJ en vivo y pantalla LED.",
+      "name": "Cumpleaños",
+      "description": "Festejá tu cumpleaños en un salón amplio y luminoso, con parque propio para disfrutar al aire libre. Un espacio cómodo para reunir a familia y amigos, desde celebraciones íntimas hasta grandes fiestas.",
+      "category": [
+        "Cumpleaños",
+        "Eventos Sociales"
+      ],
+      "features": [
+        "Salón amplio con pista de baile e iluminación ambiental",
+        "Parque verde rodeado de árboles para la recepción",
+        "Mesa dulce y catering para tus invitados",
+        "Espacio adaptable a celebraciones íntimas o numerosas"
+      ],
+      "stock": true,
+      "images": [
+        "/images/lodecarlin/salon-interior.jpg",
+        "/images/lodecarlin/catering.jpg",
+        "/images/lodecarlin/parque.jpg"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Casamientos",
+      "description": "Un casamiento rodeado de verde. Ceremonia y recepción en el parque, entre álamos y césped, y fiesta en el salón con mesas vestidas, luces cálidas y una mesa dulce para el cierre.",
       "category": [
         "Casamientos",
         "Eventos Sociales"
       ],
       "features": [
-        "Ceremonia civil y simbólica al atardecer frente al paisaje serrano",
-        "Parque exterior integrado y escalinatas iluminadas para sesiones de fotos",
-        "Propuesta de fuegos criollos a las brasas con nuestro fogonero 'FOOD'",
-        "Cava de vinos exclusiva para el brindis y maridajes distinguidos",
-        "Pista de baile con cabina de DJ profesional, pantalla LED y sonido envolvente",
-        "Climatización central, grupo electrógeno propio y estacionamiento seguro en el predio",
-        "Coordinación integral y asesoramiento personalizado para los novios"
+        "Parque con arboleda ideal para ceremonia y fotos",
+        "Salón con mesa principal, mesas redondas y cortinas de luces",
+        "Mesa dulce y torta en un espacio decorado",
+        "Recepción al aire libre y fiesta bajo techo"
       ],
       "stock": true,
       "images": [
-        "/images/malabar/casamiento-sierras.png",
-        "/images/malabar/exterior-sierras.png",
-        "/images/malabar/interior-cava.png"
-      ]
-    },
-    {
-      "id": 2,
-      "name": "Fiestas de 15 Años",
-      "description": "Tu noche soñada en un entorno de vanguardia. Entrada triunfal por las escalinatas vidriadas con letras corpóreas 'XV' iluminadas, pista de baile de máxima potencia, cabina de DJ, pantalla LED gigante, sets audiovisuales de impacto, livings modernos y mocktails exclusivos.",
-      "category": [
-        "Fiestas de 15",
-        "Eventos Sociales"
-      ],
-      "features": [
-        "Escalinatas exteriores iluminadas con letras gigantes 'XV' para una entrada soñada",
-        "Pantalla LED de alta definición para videoclips, fotos y visuales en la pista",
-        "Cabina de DJ en vivo con sonido envolvente y cabezales robóticos DMX",
-        "Barra de coctelería y mocktails frutales sin alcohol para teens",
-        "Livings contemporáneos para que tus amigos disfruten con total comodidad",
-        "Catering a las brasas, finger food gourmet y mesas dulces a elección",
-        "Seguridad privada, guardarropa y coordinación permanente durante toda la noche"
-      ],
-      "stock": true,
-      "images": [
-        "/images/malabar/cumple-15-noche.png",
-        "/images/malabar/dj-pantalla-led.png",
-        "/images/malabar/cocteleria-tragos.png"
+        "/images/lodecarlin/salon-exterior.jpg",
+        "/images/lodecarlin/salon-interior.jpg",
+        "/images/lodecarlin/catering.jpg"
       ]
     },
     {
       "id": 3,
-      "name": "Cumpleaños & Aniversarios",
-      "description": "Festejos privados, cumpleaños de 30, 40, 50, 60+ y aniversarios familiares. Un ambiente cálido y contemporáneo con fogonero encendido a las brasas, salón vidriado panorámico, sector de cava, música en vivo y atención dedicada.",
+      "name": "Aniversarios",
+      "description": "Celebrá los años compartidos en un ambiente cálido y tranquilo. Salón ambientado para una cena especial y parque para disfrutar del atardecer con los tuyos.",
       "category": [
-        "Cumpleaños & Aniversarios",
+        "Aniversarios",
         "Eventos Sociales"
       ],
       "features": [
-        "Asado criollo y cortes a las brasas con nuestro icónico fogonero 'FOOD'",
-        "Salón vidriado con vistas a las sierras y ambientación cálida con faroles de vela",
-        "Espacio de cava para degustar vinos boutique y tablas de quesos de Tandil",
-        "Musicalización y pista de baile adaptada a las preferencias del agasajado",
-        "Espacio versátil para celebraciones íntimas o recepciones numerosas",
-        "Atención personalizada de sala, mozos y servicio de barra"
+        "Ambientación cálida para cenas y brindis",
+        "Parque al aire libre para el atardecer",
+        "Mesa dulce y catering a coordinar",
+        "Atención personalizada en cada detalle"
       ],
       "stock": true,
       "images": [
-        "/images/malabar/catering-fuegos.png",
-        "/images/malabar/interior-cava.png",
-        "/images/malabar/exterior-sierras.png"
+        "/images/lodecarlin/catering.jpg",
+        "/images/lodecarlin/parque.jpg",
+        "/images/lodecarlin/salon-interior.jpg"
       ]
     },
     {
       "id": 4,
-      "name": "Eventos Corporativos & Empresariales",
-      "description": "Jornadas corporativas, lanzamientos de marca, capacitaciones, agasajos de fin de año y sunsets ejecutivos con la exclusividad y serenidad de las sierras de Tandil. Tecnología de punta para presentaciones y gastronomía de alto nivel.",
+      "name": "Capacitaciones",
+      "description": "Un espacio tranquilo y versátil para capacitaciones, jornadas de trabajo y encuentros empresariales en Cipolletti, con salón amplio y parque para los cortes.",
       "category": [
-        "Eventos Corporativos",
-        "Empresariales"
+        "Capacitaciones",
+        "Corporativos"
       ],
       "features": [
-        "Salón vidriado con luz natural y cortinas black-out para presentaciones",
-        "Pantalla LED gigante y equipamiento de sonido con micrófonos inalámbricos",
-        "Conectividad Wi-Fi de alta velocidad para streaming y conferencias",
-        "Opciones gastronómicas: coffee break, finger food, asado criollo o menú formal",
-        "Sector de cava y livings para networking y distensión ejecutiva",
-        "Estacionamiento privado seguro con acceso directo sobre Av. Don Bosco"
+        "Salón amplio y flexible según el formato de la jornada",
+        "Parque verde para pausas y networking",
+        "Opciones de coffee break y catering a coordinar",
+        "Entorno tranquilo, fuera del ruido de la ciudad"
       ],
       "stock": true,
       "images": [
-        "/images/malabar/exterior-sierras.png",
-        "/images/malabar/interior-cava.png",
-        "/images/malabar/dj-pantalla-led.png"
+        "/images/lodecarlin/salon-exterior.jpg",
+        "/images/lodecarlin/salon-interior.jpg",
+        "/images/lodecarlin/parque.jpg"
       ]
     },
     {
       "id": 5,
-      "name": "Malabar Itinerante — Tu Evento en Campo, Quinta o Domicilio",
-      "description": "Malabar sale de su locación para llevar la fiesta adonde vos elijas. Trasladamos toda nuestra técnica de sonido profesional, iluminación robótica, cabina de DJ, pantalla LED, fogoneros y barras móviles a tu estancia, quinta o espacio privado en Tandil y la región.",
+      "name": "Eventos Privados",
+      "description": "Bautismos, despedidas, egresos, reuniones familiares y todo lo que quieras celebrar. Contanos tu idea y la armamos juntos en Lo de Carlin.",
       "category": [
-        "Servicio Itinerante",
-        "Técnica & Barra"
+        "Eventos Privados",
+        "Eventos Sociales"
       ],
       "features": [
-        "Montaje completo de cabina de DJ móvil, sonido envolvente y luces robóticas",
-        "Pantalla LED gigante móvil apta para interiores o exteriores en tu quinta o campo",
-        "Servicio de barra de tragos y coctelería con bartenders profesionales",
-        "Fogoneros móviles transportables para asados y fuegos a las brasas al aire libre",
-        "Logística propia y operadores técnicos durante todo el transcurso de la velada",
-        "Cobertura en Tandil, quintas, campos y localidades de la provincia de Buenos Aires"
+        "Salón y parque para usar según tu evento",
+        "Propuesta a medida de lo que necesites",
+        "Mesa dulce y catering a coordinar",
+        "Reservas y consultas por mensaje directo"
       ],
       "stock": true,
       "images": [
-        "/images/malabar/dj-pantalla-led.png",
-        "/images/malabar/cocteleria-tragos.png",
-        "/images/malabar/catering-fuegos.png"
+        "/images/lodecarlin/parque.jpg",
+        "/images/lodecarlin/catering.jpg",
+        "/images/lodecarlin/salon-exterior.jpg"
       ]
     }
   ]

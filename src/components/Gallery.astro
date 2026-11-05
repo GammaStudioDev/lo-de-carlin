@@ -1,0 +1,113 @@
+---
+import Title from './Title.astro';
+import siteData from '../data/data.json';
+
+interface Props {
+	showTitle?: boolean;
+	cta?: boolean;
+}
+
+const { showTitle = true, cta = false } = Astro.props;
+const { website } = siteData;
+
+const photos = [
+	{ src: '/images/lodecarlin/salon-interior.jpg', alt: 'Salón ambientado para una fiesta', caption: 'Salón', cls: 'col-span-2 row-span-2' },
+	{ src: '/images/lodecarlin/catering.jpg', alt: 'Mesa dulce con torta y postres', caption: 'Mesa dulce', cls: '' },
+	{ src: '/images/lodecarlin/parque.jpg', alt: 'Parque verde al atardecer', caption: 'Parque', cls: '' },
+	{ src: '/images/lodecarlin/salon-exterior.jpg', alt: 'Frente del salón entre álamos', caption: 'Frente', cls: 'col-span-2' },
+];
+---
+
+<section id="galeria" class="mx-auto w-full max-w-7xl px-4 py-24 sm:px-8 sm:py-32">
+	{showTitle && (
+		<div class="mb-14 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+			<Title eyebrow="Galería" title="Así se vive Lo de Carlin." />
+			<a
+				data-anim="up"
+				href={website.instagram}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="inline-flex items-center gap-2 text-sm font-medium text-secondary underline decoration-secondary/30 underline-offset-4 transition-colors hover:decoration-secondary"
+			>
+				Más fotos en {website.instagramHandle}
+			</a>
+		</div>
+	)}
+
+	<div data-anim-stagger class="grid auto-rows-[13rem] grid-cols-2 gap-3 sm:gap-4 md:auto-rows-[16rem] md:grid-cols-4">
+		{photos.map((photo, i) => (
+			<button
+				type="button"
+				data-anim="up"
+				data-lightbox={i}
+				class:list={['group relative cursor-zoom-in overflow-hidden rounded-[1.25rem] text-left', photo.cls]}
+				aria-label={`Ampliar foto: ${photo.alt}`}
+			>
+				<img src={photo.src} alt={photo.alt} loading="lazy" class="h-full w-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110" />
+				<span class="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-black/60 to-transparent p-5 pt-12 font-display text-lg font-semibold text-white transition-transform duration-500 group-hover:translate-y-0">
+					{photo.caption}
+				</span>
+			</button>
+		))}
+	</div>
+
+	{cta && (
+		<div data-anim="up" class="mt-14 flex justify-center">
+			<a href="/galeria" data-magnetic class="inline-flex items-center gap-2 rounded-full border border-secondary/25 px-7 py-4 text-sm font-semibold text-secondary transition-colors hover:border-secondary hover:bg-secondary hover:text-main">
+				Ver galería completa
+			</a>
+		</div>
+	)}
+
+	<dialog id="lightbox" data-photos={JSON.stringify(photos.map(({ src, alt }) => ({ src, alt })))} class="m-auto max-h-none max-w-none bg-transparent p-0 backdrop:bg-black/85 backdrop:backdrop-blur-sm">
+		<div class="relative flex h-[100svh] w-screen items-center justify-center p-4 sm:p-12">
+			<img id="lightbox-img" src="" alt="" class="max-h-full max-w-full rounded-2xl object-contain" />
+			<button type="button" data-lb="close" aria-label="Cerrar" class="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20">
+				<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M6 6l12 12M18 6 6 18" /></svg>
+			</button>
+			<button type="button" data-lb="prev" aria-label="Anterior" class="absolute left-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20">
+				<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m15 18-6-6 6-6" /></svg>
+			</button>
+			<button type="button" data-lb="next" aria-label="Siguiente" class="absolute right-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20">
+				<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
+			</button>
+		</div>
+	</dialog>
+</section>
+
+<script>
+	import { gsap } from 'gsap';
+
+	document.addEventListener('astro:page-load', () => {
+		const dialog = document.getElementById('lightbox');
+		const img = document.getElementById('lightbox-img');
+		if (!(dialog instanceof HTMLDialogElement) || !(img instanceof HTMLImageElement)) return;
+
+		const photos: { src: string; alt: string }[] = JSON.parse(dialog.dataset.photos || '[]');
+		let current = 0;
+
+		const show = (i: number) => {
+			current = (i + photos.length) % photos.length;
+			img.src = photos[current].src;
+			img.alt = photos[current].alt;
+			gsap.fromTo(img, { opacity: 0, scale: 0.94 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'expo.out' });
+		};
+
+		document.querySelectorAll<HTMLElement>('[data-lightbox]').forEach((btn) => {
+			btn.addEventListener('click', () => {
+				dialog.showModal();
+				show(Number(btn.dataset.lightbox));
+			});
+		});
+		dialog.querySelector('[data-lb="close"]')?.addEventListener('click', () => dialog.close());
+		dialog.querySelector('[data-lb="prev"]')?.addEventListener('click', () => show(current - 1));
+		dialog.querySelector('[data-lb="next"]')?.addEventListener('click', () => show(current + 1));
+		dialog.addEventListener('click', (e) => {
+			if (e.target === dialog || (e.target as HTMLElement).classList.contains('relative')) dialog.close();
+		});
+		dialog.addEventListener('keydown', (e) => {
+			if (e.key === 'ArrowLeft') show(current - 1);
+			if (e.key === 'ArrowRight') show(current + 1);
+		});
+	});
+</script>

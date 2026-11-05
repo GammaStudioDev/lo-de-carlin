@@ -25,9 +25,13 @@ collections:
               - { label: "Email", name: "email", widget: "string" }
               - { label: "X (Twitter)", name: "x", widget: "string" }
               - { label: "Instagram", name: "instagram", widget: "string" }
+              - { label: "Usuario de Instagram", name: "instagramHandle", widget: "string" }
+              - { label: "Link de mensaje directo (Instagram)", name: "instagramDM", widget: "string" }
               - { label: "Facebook", name: "facebook", widget: "string" }
               - { label: "TikTok", name: "tiktok", widget: "string" }
               - { label: "Ubicación (link de Google Maps)", name: "ubication", widget: "string" }
+              - { label: "Dirección", name: "address", widget: "string" }
+              - { label: "Búsqueda para el mapa", name: "mapsQuery", widget: "string" }
               - { label: "Descripción", name: "description", widget: "text" }
           - label: "Colores"
             name: "colors"
@@ -37,6 +41,7 @@ collections:
               - { label: "Secundario", name: "secondary", widget: "color" }
               - { label: "Primario oscuro", name: "primaryDark", widget: "color" }
               - { label: "Secundario oscuro", name: "secondaryDark", widget: "color" }
+              - { label: "Acento", name: "accent", widget: "color" }
           - label: "Filtros"
             name: "filters"
             widget: "list"

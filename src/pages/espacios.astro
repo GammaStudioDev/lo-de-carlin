@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import siteData from '../data/data.json';
+import PageHeader from '../components/PageHeader.astro';
+import Spaces from '../components/Spaces.astro';
+import Statement from '../components/Statement.astro';
+import Gallery from '../components/Gallery.astro';
+import Contact from '../components/Contact.astro';
+import InstagramButton from '../components/InstagramButton.astro';
+
+const { website } = siteData;
+---
+
+<Layout title={`Espacios | ${website.name}`} description={`Salón, parque y catering: conocé los espacios de ${website.name}, salón de eventos en ${website.city}, ${website.province}.`} image="/images/lodecarlin/salon-interior.jpg">
+	<PageHeader
+		index="01"
+		eyebrow="Espacios"
+		title="Salón, parque | y catering."
+		description="Tres espacios pensados para que tu evento fluya: adentro, afuera y en la mesa."
+		images={[
+			{ src: '/images/lodecarlin/salon-interior.jpg', alt: 'Salón ambientado con mesas redondas' },
+			{ src: '/images/lodecarlin/parque.jpg', alt: 'Parque con césped y arboleda' },
+			{ src: '/images/lodecarlin/catering.jpg', alt: 'Mesa dulce con torta' },
+		]}
+	/>
+	<Spaces showTitle={false} />
+	<Statement text="Recepción en el parque, fiesta en el salón y una mesa dulce para el cierre. Todo sin moverse del lugar." cta={{ href: '/eventos', label: 'Ver tipos de eventos' }} />
+	<Gallery cta />
+	<Contact />
+	<InstagramButton />
+</Layout>

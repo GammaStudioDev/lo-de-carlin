@@ -1,45 +1,26 @@
 ---
-title: "Sobre Nosotros | Malabar Eventos en Tandil"
-description: "Conocé Malabar Eventos en Av. Don Bosco, Tandil. Salón exclusivo con vista panorámica a las sierras, cava de vinos, asado al fuego, cabina de DJ, iluminación, pantalla LED y servicio de eventos itinerante."
+title: "Nosotros | Lo de Carlin — Salón de Eventos en Cipolletti"
+description: "Conocé Lo de Carlin, salón de eventos con parque en Cipolletti, Río Negro. Cumpleaños, casamientos, aniversarios, capacitaciones y más."
 ---
 
-# Sobre Malabar Eventos
+# Un lugar para celebrar lo importante.
 
-Ubicado en **Av. Don Bosco**, en el corazón del paisaje serrano de **Tandil, Provincia de Buenos Aires**, **Malabar Eventos** es un espacio concebido para transformar tus celebraciones en experiencias memorables que dejan huella.
+**Lo de Carlin** es un salón de eventos en **Cipolletti, Río Negro**. Un espacio pensado para reunir a la gente que querés, con un salón amplio y un parque verde rodeado de álamos.
 
-Con una arquitectura rústico-contemporánea de líneas puras, grandes ventanales vidriados y un entorno natural inigualable, nuestras instalaciones combinan la calidez de la madera y la piedra con tecnología técnica de última generación y un equipo humano dedicado a cuidar cada detalle.
+Recibimos **cumpleaños, casamientos, aniversarios, capacitaciones y más**: cada evento es distinto, y por eso lo armamos junto con vos.
 
-> *"⛰️ MALABAR se adapta a tu evento.  
-> 🌅 Con una vista espectacular a nuestras sierras, somos el spot ideal para tu próximo festejo.  
-> 🚀 MALABAR… un lugar que se vive distinto."*
+## El salón
 
----
+Amplio, luminoso y fácil de ambientar. Mesas redondas, mesa principal, pista de baile y luces cálidas para que la fiesta se sienta tuya.
 
-## ⛰️ Un Entorno Natural Único frente a las Sierras
+## El parque
 
-En **Malabar**, cada evento se enmarca en la serenidad y la belleza de Tandil:
+Césped, árboles y aire libre. El lugar ideal para una recepción, una ceremonia, las fotos o simplemente disfrutar del atardecer.
 
-- **🌅 Salón Vidriado & Atardeceres Serranos:** Espacio moderno y luminoso diseñado para fundirse con el paisaje. Desde su interior y terraza exterior se disfruta una vista panorámica privilegiada de las sierras, creando el marco perfecto para ceremonias al aire libre, recepciones de cóctel y cenas de gala.
-- **🔥 Gastronomía de Fuegos & Tradición Criolla:** Asador y fogonero en vivo con nuestro emblemático cartel de neón *"FOOD"*. Cortes vacunos premium, delicias ahumadas a las brasas, empanadas caseras y tablas de quesos y chacinados típicos tandileros.
-- **🍷 Cava de Vinos Exclusiva:** Un sector dedicado a la cultura del vino dentro del salón, con una cuidada selección de etiquetas boutique y maridajes para enriquecer la experiencia de tus invitados.
-- **🍸 Barras de Autor & Coctelería:** Cocktails artesanales con botánicos frescos, cristalería de diseño y servicio dinámico a cargo de bartenders profesionales durante toda la velada.
-- **🪩 Cabina de DJ, Pista & Pantalla LED:** Sonido envolvente de alta fidelidad, iluminación robótica DMX programada y pantalla gigante LED para vivir una fiesta enérgica y visualmente impactante.
-- **🚗 Estacionamiento Privado:** Predio amplio y seguro sobre Av. Don Bosco para que todos tus invitados disfruten con absoluta tranquilidad desde su llegada.
+## Catering
 
----
+Mesa dulce, torta y bocados para tus invitados, coordinados a la medida de tu evento.
 
-## 🚀 Malabar Itinerante: Llevamos la Experiencia a tu Lugar
+## Reservas
 
-**Malabar Eventos sale de su locación para llevar su servicio donde la experiencia lo pide.**
-
-Si soñás con celebrar en una quinta privada, un campo o una estancia en Tandil o sus alrededores, nuestro equipo móvil traslada la infraestructura completa:
-- Cabina de DJ en vivo y operadores de sonido.
-- Iluminación robótica y efectos especiales de pista.
-- Pantalla LED gigante para proyecciones y visuales.
-- Fogoneros móviles, barras de coctelería y servicio gastronómico integral.
-
----
-
-## 📍 Visitanos en Tandil
-
-Te invitamos a descubrir **Malabar** en **Av. Don Bosco 405 (Tandil)** o a contactarnos por WhatsApp al **+54 9 249 464-2400** para coordinar una visita y diseñar juntos la propuesta perfecta para tu casamiento, fiesta de 15, cumpleaños o evento corporativo.
+Las reservas y consultas se hacen por **mensaje directo en Instagram**. Escribinos y coordinamos una visita para que conozcas el lugar.

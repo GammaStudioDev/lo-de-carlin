@@ -1,26 +1,25 @@
 ---
 interface Props {
 	title: string;
+	eyebrow?: string;
 	description?: string;
 	level?: 1 | 2;
+	align?: 'left' | 'center';
 }
 
-const { title, description, level = 2 } = Astro.props;
-const titleClass = "font-cinzel font-light text-3xl sm:text-4xl lg:text-5xl text-black uppercase leading-tight tracking-tight";
+const { title, eyebrow, description, level = 2, align = 'left' } = Astro.props;
+const Tag = level === 1 ? 'h1' : 'h2';
 ---
 
-<section class="relative w-full overflow-hidden px-6 pt-12 pb-6">
-	<div class="text-center max-w-3xl mx-auto mb-4 animate-fade-in-up">
-		{description && (
-			<span class="inline-block text-neutral-500 font-medium uppercase tracking-[0.3em] text-xs sm:text-sm mb-3">
-				{description}
-			</span>
-		)}
-		{level === 1 ? (
-			<h1 class={titleClass}>{title}</h1>
-		) : (
-			<h2 class={titleClass}>{title}</h2>
-		)}
-		<div class="w-12 h-px bg-black/25 mx-auto my-4"></div>
-	</div>
-</section>
+<div data-anim="up" class:list={['max-w-2xl', align === 'center' && 'mx-auto text-center']}>
+	{eyebrow && (
+		<p class="mb-4 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.25em] text-secondary/60">
+			<span class="h-px w-8 bg-secondary/40"></span>
+			{eyebrow}
+		</p>
+	)}
+	<Tag class="font-display text-4xl font-bold leading-tight tracking-tight text-secondary sm:text-5xl">
+		{title}
+	</Tag>
+	{description && <p class="mt-4 text-base leading-relaxed text-secondary/70">{description}</p>}
+</div>

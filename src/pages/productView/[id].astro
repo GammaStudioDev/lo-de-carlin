@@ -2,6 +2,8 @@
 import Layout from '../../layouts/Layout.astro';
 import siteData from '../../data/data.json';
 import { products as allProducts } from '../../data/products.json';
+import Contact from '../../components/Contact.astro';
+import InstagramButton from '../../components/InstagramButton.astro';
 
 export function getStaticPaths() {
 	return allProducts.map((product) => ({
@@ -12,402 +14,163 @@ export function getStaticPaths() {
 
 const { website } = siteData;
 const { product } = Astro.props;
+const others = allProducts.filter((p) => p.id !== product.id).slice(0, 3);
 
-const whatsappMessage = `¡Hola Malabar Eventos! Me comunico desde la web para consultar información y disponibilidad para: *${product.name}*.`;
-const whatsappHref = `https://api.whatsapp.com/send?phone=${encodeURIComponent(website.telephone)}&text=${encodeURIComponent(whatsappMessage)}`;
-
-const pageTitle = `${product.name} | ${website.name}`;
-const siteOrigin = (Astro.site ?? Astro.url.origin).toString();
-const pageURL = new URL(Astro.url.pathname, siteOrigin).href;
-
+const pageURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).href;
 const productSchema = {
 	'@context': 'https://schema.org',
 	'@type': 'Service',
-	name: product.name,
+	name: `${product.name} en ${website.name}`,
 	description: product.description,
-	image: product.images,
+	image: product.images.map((img) => new URL(img, Astro.site ?? Astro.url.origin).href),
+	url: pageURL,
+	areaServed: `${website.city}, ${website.province}`,
 	provider: {
-		'@type': 'LocalBusiness',
+		'@type': 'EventVenue',
 		name: website.name,
-		telephone: website.telephone,
 		address: {
 			'@type': 'PostalAddress',
-			streetAddress: 'Av. Don Bosco 405',
-			addressLocality: 'Tandil',
-			addressRegion: 'Buenos Aires',
-			postalCode: 'B7000',
+			addressLocality: website.city,
+			addressRegion: website.province,
 			addressCountry: 'AR'
 		}
 	}
 };
 ---
 
-<Layout title={pageTitle} description={product.description}>
+<Layout title={`${product.name} en ${website.city} | ${website.name}`} description={product.description} image={product.images[0]}>
 	<script is:inline type="application/ld+json" set:html={JSON.stringify(productSchema)} />
 
-	<div class="w-11/12 lg:w-4/5 max-w-7xl mx-auto py-8 lg:py-12 flex flex-col gap-12 lg:gap-16 text-black">
-		
-		<!-- ========================================================================= -->
-		<!-- BLOQUE 1: GALERÍA PRINCIPAL Y CABECERA DEL SERVICIO                       -->
-		<!-- ========================================================================= -->
-		<section class="bg-white border border-black/15 p-6 lg:p-10 shadow-sm overflow-hidden animate-fade-in-up">
-			<!-- Breadcrumb y Tag -->
-			<div class="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-black/10">
-				<nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs sm:text-sm text-neutral-500 font-light">
-					<a href="/" class="hover:text-black transition-colors">Inicio</a>
-					<span>/</span>
-					<a href="/services" class="hover:text-black transition-colors">Propuestas</a>
-					<span>/</span>
-					<span class="text-black font-medium">{product.name}</span>
-				</nav>
+	<section class="mx-auto w-full max-w-7xl px-4 pt-10 sm:px-8 sm:pt-16">
+		<nav aria-label="Breadcrumb" class="flex items-center gap-2 text-sm text-secondary/55">
+			<a href="/" class="hover:text-secondary">Inicio</a>
+			<span>/</span>
+			<a href="/eventos" class="hover:text-secondary">Eventos</a>
+			<span>/</span>
+			<span class="text-secondary">{product.name}</span>
+		</nav>
 
-				<span class="inline-flex items-center gap-1.5 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] bg-neutral-50 text-[#261B14] border border-[#261B14]/30">
-					<span class="w-1.5 h-1.5 bg-[#261B14] animate-pulse"></span>
-					{product.category[0] || 'Experiencia'}
-				</span>
-			</div>
+		<div class="mt-8 grid items-end gap-8 lg:grid-cols-12">
+			<h1 class="font-display text-5xl font-extrabold tracking-tight text-secondary sm:text-7xl lg:col-span-7" transition:name={`product-name-${product.id}`}>
+				{product.name}
+			</h1>
+			<p class="text-lg leading-relaxed text-secondary/75 lg:col-span-5">{product.description}</p>
+		</div>
 
-			<!-- Título del servicio y CTA rápido -->
-			<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
-				<div>
-					<span class="text-[11px] text-[#261B14] font-semibold uppercase tracking-[0.3em] block mb-1">Experiencia Malabar</span>
-					<h1
-						class="font-cinzel text-3xl sm:text-5xl lg:text-6xl text-black uppercase leading-[1.1] font-light tracking-tight"
-						transition:name={`product-name-${product.id}`}
-					>
-						{product.name}
-					</h1>
-				</div>
-
-				<a
-					href={whatsappHref}
-					target="_blank"
-					rel="noopener noreferrer"
-					class="inline-flex items-center justify-center gap-2.5 border border-black bg-black hover:bg-white text-white hover:text-black font-semibold text-xs uppercase tracking-[0.2em] py-4 px-8 transition-all duration-300 shrink-0"
-				>
-					<span>Consultar / Reservar</span>
-					<span class="text-base">→</span>
-				</a>
-			</div>
-
-			<!-- Visor interactivo de Galería -->
-			<div id="product-gallery-container" data-images={JSON.stringify(product.images)} class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-				<!-- Imagen principal -->
-				<div class="lg:col-span-9 relative aspect-16/10 sm:aspect-16/9 overflow-hidden bg-neutral-100 border border-black/15 group">
-					<img
-						id="product-main-image"
-						src={product.images[0]}
-						alt={product.name}
-						transition:name={`product-image-${product.id}`}
-						class="w-full h-full object-cover transition-all duration-500"
-					/>
-					<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
-
-					<!-- Controles de navegación de imagen -->
-					{product.images.length > 1 && (
-						<>
-							<button
-								type="button"
-								id="gallery-prev-btn"
-								aria-label="Foto anterior"
-								class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 border border-black bg-white text-black hover:bg-black hover:text-white flex items-center justify-center transition-all duration-300 shadow-md"
-							>
-								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M15 19l-7-7 7-7" />
-								</svg>
-							</button>
-							<button
-								type="button"
-								id="gallery-next-btn"
-								aria-label="Foto siguiente"
-								class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 border border-black bg-white text-black hover:bg-black hover:text-white flex items-center justify-center transition-all duration-300 shadow-md"
-							>
-								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M9 5l7 7-7 7" />
-								</svg>
-							</button>
-						</>
-					)}
-				</div>
-
-				<!-- Tira de Miniaturas -->
-				<div class="lg:col-span-3 flex lg:flex-col gap-3 overflow-x-auto lg:overflow-y-auto lg:max-h-[480px] pb-2 lg:pb-0 scrollbar-none">
-					{product.images.slice(0, 4).map((imgUrl, i) => {
-						const isThirdSlot = i === 2;
-						const isFourthSlot = i === 3;
-						const hasMoreMobile = product.images.length > 3;
-						const hasMoreDesktop = product.images.length > 4;
-						const remainingMobile = product.images.length - 3;
-						const remainingDesktop = product.images.length - 4;
-
-						return (
-							<button
-								type="button"
-								class:list={[
-									"gallery-thumb-btn group relative shrink-0 overflow-hidden border border-black/20 hover:border-black data-[active=true]:border-black transition-all duration-300 focus:outline-none",
-									"w-24 h-20 sm:w-28 sm:h-24 lg:w-full lg:h-28",
-									isFourthSlot ? "hidden lg:block" : "block"
-								]}
-								data-index={i}
-								data-src={imgUrl}
-								data-active={i === 0 ? 'true' : 'false'}
-							>
-								<img src={imgUrl} alt={`${product.name} foto ${i + 1}`} class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
-								<div class="absolute inset-0 bg-black/10 data-[active=true]:bg-transparent hover:bg-transparent transition-colors"></div>
-
-								{isThirdSlot && hasMoreMobile && (
-									<div class="lg:hidden absolute inset-0 bg-black/75 backdrop-blur-[2px] flex flex-col items-center justify-center text-white transition-colors group-hover:bg-black/60">
-										<span class="font-cinzel font-normal text-2xl sm:text-3xl text-white leading-none">
-											+{remainingMobile}
-										</span>
-										<span class="text-[10px] sm:text-xs uppercase tracking-wider text-white/90 mt-0.5 font-light">
-											más
-										</span>
-									</div>
-								)}
-
-								{isFourthSlot && hasMoreDesktop && (
-									<div class="hidden lg:flex absolute inset-0 bg-black/75 backdrop-blur-[2px] flex-col items-center justify-center text-white transition-colors group-hover:bg-black/60">
-										<span class="font-cinzel font-normal text-2xl sm:text-3xl lg:text-4xl text-white leading-none">
-											+{remainingDesktop}
-										</span>
-										<span class="text-[10px] sm:text-xs uppercase tracking-wider text-white/90 mt-1 font-light">
-											más
-										</span>
-									</div>
-								)}
-							</button>
-						);
-					})}
-				</div>
-			</div>
-		</section>
-
-		<!-- ========================================================================= -->
-		<!-- BLOQUE 2: DESCRIPCIÓN DETALLADA E INFORMACIÓN DEL EVENTO                  -->
-		<!-- ========================================================================= -->
-		<section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch animate-fade-in-up">
-			<!-- Columna de texto descriptivo -->
-			<div class="lg:col-span-8 bg-white border border-black/15 p-8 lg:p-12 shadow-sm flex flex-col justify-between">
-				<div>
-					<span class="text-[#261B14] font-semibold uppercase tracking-[0.3em] text-[11px] mb-2 block">
-						La Experiencia
-					</span>
-					<h2 class="font-cinzel font-light text-2xl sm:text-4xl text-black uppercase leading-tight mb-6">
-						Un momento pensado para disfrutar
-					</h2>
-					<div class="w-12 h-px bg-black/25 mb-6"></div>
-					<p class="text-neutral-700 text-base sm:text-lg leading-relaxed font-light mb-6">
-						{product.description}
-					</p>
-					<p class="text-neutral-600 text-sm sm:text-base leading-relaxed font-light">
-						En <strong>{website.name}</strong> te ofrecemos una solución integral en Tandil con vista directa a las sierras, gastronomía criolla de fuegos, cava de vinos, cabina de DJ profesional, pantalla LED y servicio móvil para cualquier locación.
-					</p>
-				</div>
-
-				<div class="mt-8 pt-6 border-t border-black/10 flex flex-wrap items-center gap-6 text-xs sm:text-sm text-neutral-600 font-light">
-					<div class="flex items-center gap-2">
-						<svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><circle cx="12" cy="11" r="3" stroke-width="1.5"/></svg>
-						<span>Av. Don Bosco 405, Tandil</span>
+		<!-- Galería -->
+		<div id="product-gallery" data-images={JSON.stringify(product.images)} class="mt-12">
+			<div class="relative overflow-hidden rounded-2xl bg-tertiary">
+				<img
+					id="product-main-image"
+					src={product.images[0]}
+					alt={product.name}
+					transition:name={`product-image-${product.id}`}
+					class="aspect-[4/3] w-full object-cover transition-opacity duration-300 md:aspect-[16/8]"
+				/>
+				{product.images.length > 1 && (
+					<div class="absolute bottom-4 right-4 flex gap-2">
+						<button type="button" id="gallery-prev" aria-label="Foto anterior" class="flex h-11 w-11 items-center justify-center rounded-full bg-main/90 text-secondary backdrop-blur transition hover:bg-main">
+							<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="m15 18-6-6 6-6" /></svg>
+						</button>
+						<button type="button" id="gallery-next" aria-label="Foto siguiente" class="flex h-11 w-11 items-center justify-center rounded-full bg-main/90 text-secondary backdrop-blur transition hover:bg-main">
+							<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
+						</button>
 					</div>
-					<div class="flex items-center gap-2">
-						<svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-						<span>Consultas & Visitas por WhatsApp: {website.phoneDisplay || '+54 9 249 464-2400'}</span>
-					</div>
-				</div>
+				)}
 			</div>
-
-			<!-- Columna de destacados / Resumen rápido -->
-			<div class="lg:col-span-4 bg-neutral-50 border border-black/15 p-8 shadow-sm flex flex-col justify-between gap-6">
-				<div>
-					<span class="text-[#261B14] font-semibold uppercase tracking-[0.25em] text-[10px]">Información</span>
-					<h3 class="font-cinzel text-2xl uppercase mt-1 mb-6 font-light text-black">Detalles de Malabar</h3>
-
-					<div class="space-y-4">
-						<div class="flex items-start gap-3.5">
-							<div class="w-8 h-8 border border-black/20 bg-white flex items-center justify-center shrink-0 mt-0.5 text-black">
-								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-							</div>
-							<div>
-								<span class="block text-[10px] text-neutral-500 font-semibold uppercase tracking-wider">Locación</span>
-								<span class="text-sm font-medium text-black">Vista Panorámica a las Sierras</span>
-							</div>
-						</div>
-
-						<div class="flex items-start gap-3.5">
-							<div class="w-8 h-8 border border-black/20 bg-white flex items-center justify-center shrink-0 mt-0.5 text-black">
-								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/></svg>
-							</div>
-							<div>
-								<span class="block text-[10px] text-neutral-500 font-semibold uppercase tracking-wider">Gastronomía & Cava</span>
-								<span class="text-sm font-medium text-black">Fuegos en Vivo & Vinos Boutique</span>
-							</div>
-						</div>
-
-						<div class="flex items-start gap-3.5">
-							<div class="w-8 h-8 border border-black/20 bg-white flex items-center justify-center shrink-0 mt-0.5 text-black">
-								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
-							</div>
-							<div>
-								<span class="block text-[10px] text-neutral-500 font-semibold uppercase tracking-wider">Técnica & Pista</span>
-								<span class="text-sm font-medium text-black">Cabina DJ & Pantalla LED</span>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<a
-					href={whatsappHref}
-					target="_blank"
-					rel="noopener noreferrer"
-					class="w-full text-center py-3.5 border border-black bg-black hover:bg-white text-white hover:text-black font-semibold text-xs uppercase tracking-[0.2em] transition-colors duration-300"
-				>
-					Consultar por WhatsApp
-				</a>
-			</div>
-		</section>
-
-		<!-- ========================================================================= -->
-		<!-- BLOQUE 3: LO QUE INCLUYE EL SERVICIO (CARDS GRID)                         -->
-		<!-- ========================================================================= -->
-		{product.features && product.features.length > 0 && (
-			<section class="animate-fade-in-up">
-				<div class="text-center max-w-2xl mx-auto mb-10">
-					<span class="text-[#261B14] font-semibold uppercase tracking-[0.3em] text-[11px] mb-2 block">
-						Detalles & Servicios
-					</span>
-					<h2 class="font-cinzel text-3xl sm:text-4xl text-black uppercase leading-tight font-light">
-						¿Qué incluye esta propuesta?
-					</h2>
-					<div class="w-12 h-px bg-black/25 mx-auto my-4"></div>
-					<p class="text-neutral-600 text-xs sm:text-sm font-light">
-						Cada aspecto está preparado para brindarte confort, distinción y excelencia.
-					</p>
-				</div>
-
-				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-					{product.features.map((feature) => (
-						<div class="group flex items-start gap-4 p-6 bg-white border border-black/15 shadow-sm hover:border-black transition-all duration-300">
-							<div class="w-9 h-9 border border-black/20 bg-neutral-50 text-black flex items-center justify-center shrink-0">
-								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M5 13l4 4L19 7" />
-								</svg>
-							</div>
-							<div>
-								<h3 class="font-cinzel text-base text-black uppercase tracking-wide">
-									{feature}
-								</h3>
-								<p class="text-xs text-neutral-600 mt-1 leading-relaxed font-light">
-									Servicio integral con la calidad y calidez de Malabar.
-								</p>
-							</div>
-						</div>
+			{product.images.length > 1 && (
+				<div class="mt-3 grid grid-cols-3 gap-3 sm:gap-4">
+					{product.images.map((img, i) => (
+						<button
+							type="button"
+							class="gallery-thumb overflow-hidden rounded-xl opacity-60 transition-opacity hover:opacity-100 data-[active=true]:opacity-100"
+							data-index={i}
+							data-active={i === 0 ? 'true' : 'false'}
+							aria-label={`Ver foto ${i + 1}`}
+						>
+							<img src={img} alt="" loading="lazy" class="aspect-[16/9] w-full object-cover" />
+						</button>
 					))}
 				</div>
-			</section>
-		)}
+			)}
+		</div>
+	</section>
 
-		<!-- ========================================================================= -->
-		<!-- BLOQUE 4: CALL TO ACTION FINAL                                            -->
-		<!-- ========================================================================= -->
-		<section class="border border-black/15 bg-white p-8 sm:p-14 text-center shadow-sm relative overflow-hidden animate-fade-in-up">
-			<div class="relative z-10 max-w-2xl mx-auto flex flex-col items-center gap-6">
-				<span class="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#261B14] block">
-					Planificación Personalizada
-				</span>
-				<h2 class="font-cinzel text-3xl sm:text-4xl lg:text-5xl uppercase leading-tight font-light text-black">
-					¿Querés coordinar tu fecha en Malabar?
-				</h2>
-				<div class="w-12 h-px bg-black/25 mx-auto"></div>
-				<p class="text-neutral-600 text-xs sm:text-sm leading-relaxed font-light">
-					Contactate con nosotros para consultar disponibilidad en Av. Don Bosco (Tandil) o solicitar presupuesto a medida.
-				</p>
-				<div class="flex flex-wrap items-center justify-center gap-4 pt-2">
-					<a
-						href={whatsappHref}
-						target="_blank"
-						rel="noopener noreferrer"
-						class="border border-black bg-black hover:bg-white text-white hover:text-black font-semibold text-xs uppercase tracking-[0.2em] py-4 px-8 transition-all duration-300"
-					>
-						Escribir por WhatsApp
-					</a>
-					<a
-						href="/services"
-						class="border border-black/30 hover:border-black text-black hover:bg-black/5 font-semibold text-xs uppercase tracking-[0.2em] py-4 px-8 transition-all duration-300"
-					>
-						Ver todas las propuestas
-					</a>
+	<!-- Qué incluye -->
+	{product.features && product.features.length > 0 && (
+		<section class="mx-auto w-full max-w-7xl px-4 py-24 sm:px-8">
+			<div class="grid gap-12 lg:grid-cols-12">
+				<div class="lg:col-span-4">
+					<p class="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.25em] text-secondary/60">
+						<span class="h-px w-8 bg-secondary/40"></span>
+						La propuesta
+					</p>
+					<h2 class="mt-4 font-display text-3xl font-bold tracking-tight sm:text-4xl">Qué incluye</h2>
 				</div>
+				<ul class="divide-y divide-secondary/10 border-y border-secondary/10 lg:col-span-8">
+					{product.features.map((feature, i) => (
+						<li data-anim="up" class="flex items-baseline gap-6 py-6">
+							<span class="font-display text-sm font-semibold text-secondary/35">{String(i + 1).padStart(2, '0')}</span>
+							<span class="text-lg text-secondary">{feature}</span>
+						</li>
+					))}
+				</ul>
 			</div>
 		</section>
+	)}
 
-	</div>
+	<Contact />
+
+	<!-- Otros eventos -->
+	<section class="mx-auto w-full max-w-7xl px-4 py-24 sm:px-8">
+		<h2 class="font-display text-3xl font-bold tracking-tight">Otros eventos</h2>
+		<div class="mt-10 grid gap-5 sm:grid-cols-3">
+			{others.map((p) => (
+				<a href={`/productView/${p.id}`} class="group block">
+					<div class="overflow-hidden rounded-2xl">
+						<img src={p.images[0]} alt={p.name} loading="lazy" class="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
+					</div>
+					<p class="mt-4 inline-flex items-center gap-2 font-display text-xl font-semibold">
+						{p.name}
+						<svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6" /></svg>
+					</p>
+				</a>
+			))}
+		</div>
+	</section>
+
+	<InstagramButton />
 </Layout>
 
 <script>
 	document.addEventListener('astro:page-load', () => {
-		const mainImage = document.getElementById('product-main-image');
-		const prevBtn = document.getElementById('gallery-prev-btn');
-		const nextBtn = document.getElementById('gallery-next-btn');
-		const thumbBtns = Array.from(document.querySelectorAll('.gallery-thumb-btn'));
-		const galleryContainer = document.getElementById('product-gallery-container');
+		const gallery = document.getElementById('product-gallery');
+		const main = document.getElementById('product-main-image');
+		if (!gallery || !(main instanceof HTMLImageElement)) return;
 
-		if (!mainImage) return;
-
-		let allImages: string[] = [];
+		let images: string[] = [];
 		try {
-			allImages = JSON.parse(galleryContainer?.getAttribute('data-images') || '[]');
+			images = JSON.parse(gallery.dataset.images || '[]');
 		} catch {
-			allImages = thumbBtns.map((b) => (b as HTMLElement).dataset.src || '');
+			return;
 		}
+		if (images.length < 2) return;
 
-		if (allImages.length === 0) return;
+		const thumbs = Array.from(gallery.querySelectorAll<HTMLElement>('.gallery-thumb'));
+		let current = 0;
 
-		let currentIndex = 0;
-
-		const updateGallery = (index: number) => {
-			if (index < 0) index = allImages.length - 1;
-			if (index >= allImages.length) index = 0;
-			currentIndex = index;
-
-			const newSrc = allImages[currentIndex];
-			if (newSrc && mainImage instanceof HTMLImageElement) {
-				mainImage.style.opacity = '0.5';
-				setTimeout(() => {
-					mainImage.src = newSrc;
-					mainImage.style.opacity = '1';
-				}, 150);
-			}
-
-			const isMobile = window.innerWidth < 1024;
-			const maxVisibleIndex = isMobile ? 2 : Math.min(3, thumbBtns.length - 1);
-			const activeThumbIndex = Math.min(currentIndex, maxVisibleIndex);
-			thumbBtns.forEach((btn, idx) => {
-				btn.setAttribute('data-active', idx === activeThumbIndex ? 'true' : 'false');
-			});
+		const show = (index: number) => {
+			current = (index + images.length) % images.length;
+			main.style.opacity = '0';
+			setTimeout(() => {
+				main.src = images[current];
+				main.style.opacity = '1';
+			}, 150);
+			thumbs.forEach((t, i) => t.setAttribute('data-active', String(i === current)));
 		};
 
-		thumbBtns.forEach((btn) => {
-			btn.addEventListener('click', () => {
-				const idx = Number((btn as HTMLElement).dataset.index || '0');
-				const isMobile = window.innerWidth < 1024;
-				const lastSlotIdx = isMobile ? 2 : 3;
-				const hasMore = isMobile ? allImages.length > 3 : allImages.length > 4;
-
-				if (idx === lastSlotIdx && hasMore && currentIndex >= lastSlotIdx) {
-					updateGallery(currentIndex + 1 >= allImages.length ? lastSlotIdx : currentIndex + 1);
-				} else {
-					updateGallery(idx);
-				}
-			});
-		});
-
-		if (prevBtn) {
-			prevBtn.addEventListener('click', () => updateGallery(currentIndex - 1));
-		}
-
-		if (nextBtn) {
-			nextBtn.addEventListener('click', () => updateGallery(currentIndex + 1));
-		}
+		thumbs.forEach((t) => t.addEventListener('click', () => show(Number(t.dataset.index || 0))));
+		document.getElementById('gallery-prev')?.addEventListener('click', () => show(current - 1));
+		document.getElementById('gallery-next')?.addEventListener('click', () => show(current + 1));
 	});
 </script>

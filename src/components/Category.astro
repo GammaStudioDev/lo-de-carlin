@@ -3,22 +3,40 @@ import ServiceCard from './ServiceCard.astro';
 import productsData from '../data/products.json';
 import Title from './Title.astro';
 
+interface Props {
+	showTitle?: boolean;
+	cta?: boolean;
+}
+
+const { showTitle = true, cta = false } = Astro.props;
 const { products } = productsData;
 ---
 
-<section id="services" class="w-11/12 lg:w-4/5 max-w-7xl mx-auto py-16 lg:py-24 text-black">
-	<!-- Encabezado de la sección -->
-	<Title title="Propuestas de Eventos" description="Casamientos, Fiestas de 15, Cumpleaños, Eventos Corporativos & Servicio Itinerante en Tandil"/>
-
-	<!-- Grilla de tarjetas de servicios sin bordes redondeados -->
-	<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
-		{products.map((service, index) => (
-			<div
-				class="animate-fade-in-up animate-duration-500 flex"
-				style={`animation-delay: ${index * 100}ms;`}
-			>
-				<ServiceCard product={service} />
+<section id="eventos" class="w-full bg-tertiary/50">
+	<div class="mx-auto max-w-7xl px-4 py-24 sm:px-8 sm:py-32">
+		{showTitle && (
+			<div class="mb-14 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+				<Title eyebrow="Eventos" title="Un lugar para cada celebración." />
+				<p data-anim="up" class="max-w-sm text-secondary/70">
+					Cumpleaños, casamientos, aniversarios, capacitaciones y más. Contanos qué querés festejar.
+				</p>
 			</div>
-		))}
+		)}
+
+		<div data-anim-stagger class="grid gap-5 sm:grid-cols-2 lg:grid-cols-6">
+			{products.map((product, index) => (
+				<div data-anim="up" class:list={['lg:col-span-2', index >= 3 && 'lg:col-span-3']}>
+					<ServiceCard product={product} index={index} wide={index >= 3} />
+				</div>
+			))}
+		</div>
+
+		{cta && (
+			<div data-anim="up" class="mt-14 flex justify-center">
+				<a href="/eventos" data-magnetic class="inline-flex items-center gap-2 rounded-full bg-secondary px-7 py-4 text-sm font-semibold text-main transition-opacity hover:opacity-90">
+					Ver todos los eventos
+				</a>
+			</div>
+		)}
 	</div>
 </section>

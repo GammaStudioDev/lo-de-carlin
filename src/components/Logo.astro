@@ -2,37 +2,28 @@
 import siteData from '../data/data.json';
 
 interface Props {
-    hideOnMobile?: boolean;
-    footer?: boolean;
+	footer?: boolean;
 }
 
 const { website } = siteData;
-const { hideOnMobile = false, footer = false } = Astro.props;
+const { footer = false } = Astro.props;
 ---
 
-<span class="relative group/logo flex flex-row items-center gap-3 sm:gap-4 text-black select-none isolate">
-    <!-- Emblema del logo oficial Malabar -->
-    <span class="shrink-0 relative flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-        <img
-            src="/images/malabar/logo.png"
-            alt={website.name}
-            class:list={[
-                "object-contain",
-                footer ? "h-12 w-12 sm:h-14 sm:w-14" : "h-10 w-10 sm:h-11 sm:w-11"
-            ]}
-            loading="eager"
-            width="48"
-            height="48"
-        />
-    </span>
-
-    <!-- Textos de la marca: Fondo blanco con texto negro nítido -->
-    <span id={hideOnMobile ? "navbar-logo-name" : undefined} class:list={["flex flex-col text-left justify-center leading-none", hideOnMobile && "hidden sm:flex"]}>
-        <span class:list={["font-cinzel font-bold text-black tracking-[0.3em] uppercase leading-none group-hover:text-neutral-700 transition-colors", footer ? "text-lg sm:text-xl" : "text-base sm:text-lg"]}>
-            MALABAR
-        </span>
-        <span class:list={["font-montserrat block font-medium tracking-[0.35em] text-neutral-500 uppercase leading-none mt-1", footer ? "text-[10px] sm:text-xs" : "text-[8px] sm:text-[9px]"]}>
-            EVENTOS • TANDIL
-        </span>
-    </span>
+<span class="flex items-center gap-3 select-none">
+	<img
+		src="/images/lodecarlin/logo.png"
+		alt={website.name}
+		width="240"
+		height="240"
+		loading="eager"
+		class:list={['object-cover', footer ? 'h-16 w-16' : 'h-10 w-10 sm:h-11 sm:w-11']}
+	/>
+	<span class="flex flex-col leading-none">
+		<span class:list={['font-display font-extrabold tracking-tight text-secondary', footer ? 'text-2xl' : 'text-lg']}>
+			{website.name}
+		</span>
+		<span class="mt-1 text-[10px] font-medium uppercase tracking-[0.25em] text-secondary/60">
+			Salón de eventos
+		</span>
+	</span>
 </span>

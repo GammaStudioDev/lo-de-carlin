@@ -1,0 +1,77 @@
+---
+import Title from './Title.astro';
+
+interface Props {
+	showTitle?: boolean;
+	cta?: boolean;
+}
+
+const { showTitle = true, cta = false } = Astro.props;
+
+const spaces = [
+	{
+		number: '01',
+		title: 'Salón',
+		tag: 'Bajo techo',
+		description: 'Un salón amplio y luminoso, con piso claro, pista de baile e iluminación ambiental. Se adapta a mesas redondas, mesa principal y la decoración que imagines.',
+		points: ['Pista de baile', 'Iluminación ambiental', 'Mesa principal'],
+		image: '/images/lodecarlin/salon-interior.jpg',
+		alt: 'Interior del salón con mesas redondas vestidas y cortinas de luces',
+	},
+	{
+		number: '02',
+		title: 'Parque',
+		tag: 'Al aire libre',
+		description: 'Césped, álamos y mucho verde. Ideal para recepciones, ceremonias, fotos y para que los más chicos jueguen tranquilos.',
+		points: ['Recepciones', 'Ceremonias', 'Sesiones de fotos'],
+		image: '/images/lodecarlin/parque.jpg',
+		alt: 'Parque de Lo de Carlin con césped y árboles al atardecer',
+	},
+	{
+		number: '03',
+		title: 'Catering',
+		tag: 'A medida',
+		description: 'Mesa dulce, torta y bocados para tus invitados. Lo coordinamos junto con vos para que cada detalle esté a la altura.',
+		points: ['Mesa dulce', 'Torta', 'Bocados'],
+		image: '/images/lodecarlin/catering.jpg',
+		alt: 'Mesa dulce con torta, postres y arco floral',
+	},
+];
+---
+
+<section id="espacios" class="mx-auto w-full max-w-7xl px-4 py-24 sm:px-8 sm:py-32">
+	{showTitle && <Title eyebrow="Espacios" title="Todo lo que necesitás, en un solo lugar." />}
+
+	<div class:list={['flex flex-col gap-24 sm:gap-36', showTitle && 'mt-20']}>
+		{spaces.map((space, i) => (
+			<article class="grid items-center gap-10 md:grid-cols-12 md:gap-14">
+				<div class:list={['relative md:col-span-7', i % 2 === 1 && 'md:order-2']}>
+					<div data-anim="clip" class="overflow-hidden rounded-[1.25rem]">
+						<div data-parallax="0.14" class="h-full w-full">
+							<img src={space.image} alt={space.alt} loading="lazy" class="aspect-[4/3] w-full scale-110 object-cover" />
+						</div>
+					</div>
+					<span class="absolute -top-5 left-5 rounded-full bg-main px-4 py-2 text-xs font-medium uppercase tracking-[0.2em] text-secondary shadow-sm">{space.tag}</span>
+				</div>
+				<div data-anim="up" class:list={['md:col-span-5', i % 2 === 1 && 'md:order-1']}>
+					<span class="text-outline font-display text-7xl font-extrabold leading-none sm:text-8xl">{space.number}</span>
+					<h3 class="mt-4 font-display text-4xl font-bold tracking-tight text-secondary sm:text-5xl">{space.title}</h3>
+					<p class="mt-5 max-w-md leading-relaxed text-secondary/70">{space.description}</p>
+					<ul class="mt-6 flex flex-wrap gap-2">
+						{space.points.map((p) => (
+							<li class="rounded-full border border-secondary/15 px-3.5 py-1.5 text-sm text-secondary/75">{p}</li>
+						))}
+					</ul>
+				</div>
+			</article>
+		))}
+	</div>
+
+	{cta && (
+		<div data-anim="up" class="mt-20 flex justify-center">
+			<a href="/espacios" data-magnetic class="inline-flex items-center gap-2 rounded-full border border-secondary/25 px-7 py-4 text-sm font-semibold text-secondary transition-colors hover:border-secondary hover:bg-secondary hover:text-main">
+				Ver todos los espacios
+			</a>
+		</div>
+	)}
+</section>

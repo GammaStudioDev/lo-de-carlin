@@ -3,54 +3,65 @@
 @import "tailwind-animations";
 
 @theme {
-	--font-cinzel: "Cinzel", serif;
-	--font-montserrat: "Montserrat", sans-serif;
-	--font-anton: "Anton", sans-serif;
+	--font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
+	--font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
+/* Paleta tomada del logo de Lo de Carlin (los valores vienen de data.json vía Layout) */
 :root {
-	--color-main-value: var(--color-main-light, #FFFFFF);
-	--color-secondary-value: var(--color-secondary-light, #000000);
-	--color-tertiary-value: #FAFAFA;
-	
-	/* White futuristic minimalism with sparse espresso/dark wood accent */
-	--color-surface: #FFFFFF;
-	--color-surface-soft: #F5F5F5;
-	--color-surface-elevated: #EFEFEF;
-	--color-border-subtle: rgba(0, 0, 0, 0.10);
-	--color-border-strong: rgba(0, 0, 0, 0.25);
-	
-	/* Very subtle dark brown detail */
-	--color-brown-subtle: #241A14;
-	--color-brown-border: #3A2B22;
-
-	--background-image-radial-custom: 
-		radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 0, 0, 0.02) 0%, transparent 70%),
-		radial-gradient(ellipse 60% 40% at 90% 80%, rgba(36, 26, 20, 0.03) 0%, transparent 60%);
+	--color-main-value: var(--color-main-light, #F4F1EC);
+	--color-secondary-value: var(--color-secondary-light, #4A2C21);
+	--color-accent-value: var(--color-accent, #C5BDAE);
+	--color-tertiary-value: #EAE5DD;
 }
 
-/* Force sharp edges on all elements for futuristic architectural look */
-*, *::before, *::after {
-	border-radius: 0px !important;
+html {
+	scroll-behavior: smooth;
+	scroll-padding-top: 5rem;
 }
 
-/* Futuristic smooth custom scrollbar */
+/* Scrollbar discreta */
 ::-webkit-scrollbar {
-	width: 6px;
-	height: 6px;
+	width: 8px;
+	height: 8px;
 }
 ::-webkit-scrollbar-track {
-	background: #FFFFFF;
+	background: var(--color-main-value);
 }
 ::-webkit-scrollbar-thumb {
-	background: #D4D4D4;
+	background: var(--color-accent-value);
 }
 ::-webkit-scrollbar-thumb:hover {
-	background: #737373;
+	background: var(--color-secondary-value);
 }
 
-/* Selection */
 ::selection {
-	background-color: #000000;
-	color: #FFFFFF;
+	background-color: var(--color-secondary-value);
+	color: var(--color-main-value);
+}
+
+/* Estados iniciales de las animaciones GSAP (src/scripts/animations.ts).
+   Sin JS se muestran gracias al <noscript> del Layout. */
+@media (prefers-reduced-motion: no-preference) {
+	[data-anim="up"],
+	[data-anim="clip"],
+	[data-anim="words"],
+	[data-hero] {
+		opacity: 0;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+}
+
+/* Contorno de texto para números decorativos */
+.text-outline {
+	color: transparent;
+	-webkit-text-stroke: 1.5px var(--color-secondary-value);
+}
+.text-outline-light {
+	color: transparent;
+	-webkit-text-stroke: 1.5px var(--color-main-value);
 }

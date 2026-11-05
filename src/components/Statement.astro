@@ -1,0 +1,25 @@
+---
+interface Props {
+	text?: string;
+	cta?: { href: string; label: string };
+}
+
+const {
+	text = 'Un salón amplio, un parque lleno de verde y todo lo necesario para que tu único trabajo sea disfrutar.',
+	cta,
+} = Astro.props;
+---
+
+<section class="mx-auto w-full max-w-6xl px-4 py-24 sm:px-8 sm:py-36">
+	<p data-anim="words" class="font-display text-3xl font-bold leading-[1.15] tracking-tight text-secondary sm:text-5xl lg:text-6xl">
+		{text}
+	</p>
+	{cta && (
+		<a data-anim="up" href={cta.href} class="group mt-10 inline-flex items-center gap-3 text-sm font-semibold text-secondary">
+			<span class="flex h-11 w-11 items-center justify-center rounded-full border border-secondary/25 transition-colors group-hover:bg-secondary group-hover:text-main">
+				<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6" /></svg>
+			</span>
+			{cta.label}
+		</a>
+	)}
+</section>

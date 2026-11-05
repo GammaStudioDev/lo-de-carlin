@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+import siteData from '../data/data.json';
+import PageHeader from '../components/PageHeader.astro';
+import Category from '../components/Category.astro';
+import Marquee from '../components/Marquee.astro';
+import Steps from '../components/Steps.astro';
+import Contact from '../components/Contact.astro';
+import InstagramButton from '../components/InstagramButton.astro';
+
+const { website } = siteData;
+---
+
+<Layout title={`Eventos | ${website.name}`} description={`Cumpleaños, casamientos, aniversarios, capacitaciones y eventos privados en ${website.name}, ${website.city}, ${website.province}.`}>
+	<PageHeader
+		index="02"
+		eyebrow="Eventos"
+		title="Un lugar para | cada celebración."
+		description="Cumpleaños, casamientos, aniversarios, capacitaciones y más. Elegí tu evento y mirá la propuesta."
+	/>
+	<Marquee />
+	<Category showTitle={false} />
+	<Steps />
+	<Contact />
+	<InstagramButton />
+</Layout>

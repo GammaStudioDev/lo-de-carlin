@@ -1,42 +1,18 @@
 ---
-const items = [
-	'Casamientos',
-	'Fiestas de 15',
-	'Cumpleaños & Aniversarios',
-	'Eventos Corporativos',
-	'Sierras de Tandil',
-	'Fuegos en Vivo',
-	'Cava de Vinos',
-	'Cabina DJ & Pantalla LED',
-	'Coctelería de Autor',
-	'Malabar Itinerante'
-];
+import productsData from '../data/products.json';
+
+const items = [...productsData.products.map((p) => p.name), 'y mucho más'];
 ---
 
-<section class="w-full overflow-hidden border-y border-black/15 bg-white py-4 select-none">
-	<div class="flex items-center gap-8 whitespace-nowrap animate-marquee">
-		{items.concat(items).concat(items).map((item) => (
-			<div class="inline-flex items-center gap-8">
-				<span class="text-xs sm:text-sm uppercase tracking-[0.3em] font-light text-black">
-					{item}
-				</span>
-				<span class="text-[10px] text-[#261B14]/60">◆</span>
-			</div>
+<section class="w-full overflow-hidden py-8 select-none" aria-label="Tipos de eventos">
+	<div class="-mx-[5%] w-[110%] -rotate-[1.5deg] overflow-hidden bg-secondary py-5 text-main sm:py-6">
+	<div data-marquee class="flex w-max items-center gap-10 motion-reduce:animate-none">
+		{[...items, ...items, ...items, ...items].map((item, i) => (
+			<span class="inline-flex items-center gap-10" aria-hidden={i >= items.length ? 'true' : undefined}>
+				<span class:list={['font-display text-2xl font-bold sm:text-3xl', i % 2 === 1 && 'text-outline-light']}>{item}</span>
+				<svg class="h-5 w-5 text-accent" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c.6 6.6 5.4 11.4 12 12-6.6.6-11.4 5.4-12 12-.6-6.6-5.4-11.4-12-12C6.6 11.4 11.4 6.6 12 0Z" /></svg>
+			</span>
 		))}
 	</div>
+	</div>
 </section>
-
-<style>
-	@keyframes marquee {
-		0% { transform: translateX(0%); }
-		100% { transform: translateX(-50%); }
-	}
-	.animate-marquee {
-		display: flex;
-		width: max-content;
-		animation: marquee 25s linear infinite;
-	}
-	.animate-marquee:hover {
-		animation-play-state: paused;
-	}
-</style>

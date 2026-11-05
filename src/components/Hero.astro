@@ -1,129 +1,99 @@
 ---
 import siteData from '../data/data.json';
+import productsData from '../data/products.json';
 
 const { website } = siteData;
-const defaultWhatsapp = `https://api.whatsapp.com/send?phone=${encodeURIComponent(website.telephone)}&text=${encodeURIComponent('¡Hola Malabar Eventos! Me comunico desde la web para consultar disponibilidad y propuestas para mi evento.')}`;
-
-interface Props {
-	title?: string;
-	subtitle?: string;
-	description?: string;
-}
-
-const {
-	title = 'Un lugar que se vive distinto',
-	subtitle = 'Espacio de eventos en Tandil con vista panorámica a nuestras sierras y gastronomía de fuegos.',
-	description = 'Casamientos, Fiestas de 15, Aniversarios y Eventos Corporativos. Arquitectura vidriada frente a los cerros, cava de vinos, cabina de DJ profesional, pantalla LED y servicio integral tanto en locación como itinerante.',
-}: Props = Astro.props;
+const words = ['cumpleaños', 'casamiento', 'aniversario', 'capacitación', 'evento'];
+const services = productsData.products.slice(0, 4).map((p) => p.name);
 ---
 
-<section class="w-11/12 lg:w-4/5 max-w-7xl mx-auto min-h-[calc(100vh-6rem)] flex items-center justify-center py-12 lg:py-20 text-black">
-	<div class="grid lg:grid-cols-12 items-center gap-12 lg:gap-16 w-full">
-		<!-- Columna de texto principal -->
-		<div class="lg:col-span-7 flex flex-col items-start text-left">
-			<!-- Tag / Badge Malabar -->
-			<div class="inline-flex items-center gap-2 px-3.5 py-1.5 border border-black/20 bg-black/5 mb-6">
-				<span class="w-1.5 h-1.5 bg-black animate-pulse"></span>
-				<span class="text-[10px] font-semibold uppercase tracking-[0.25em] text-neutral-800">
-					Espacio de Eventos • Tandil, Sierras
+<section data-hero class="relative w-full overflow-hidden">
+	<div class="mx-auto grid min-h-[calc(100svh-4.3rem)] max-w-7xl items-center gap-10 px-4 py-8 sm:px-8 lg:grid-cols-12 lg:gap-8 lg:py-10">
+		<!-- Texto -->
+		<div class="relative z-10 lg:col-span-6">
+			<p data-hero-fade class="mb-5 inline-flex items-center gap-2 rounded-full border border-secondary/15 bg-tertiary/60 px-3.5 py-1.5 text-[11px] font-medium uppercase tracking-[0.22em] text-secondary/70">
+				<span class="relative flex h-2 w-2">
+					<span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-secondary/40"></span>
+					<span class="relative inline-flex h-2 w-2 rounded-full bg-secondary"></span>
 				</span>
-			</div>
+				Salón de eventos · {website.city}
+			</p>
 
-			<h1 class="animate-fade-in-up animate-duration-500 font-cinzel font-light text-4xl sm:text-6xl md:text-6xl lg:text-7xl text-black leading-[1.05] tracking-tight">
-				<span class="font-normal tracking-[0.1em] block text-[#261B14] text-2xl sm:text-3xl lg:text-4xl mb-2 font-montserrat uppercase">MALABAR</span>
-				{title}
+			<h1 class="font-display text-[2.75rem] font-extrabold leading-[0.95] tracking-tight text-secondary sm:text-7xl lg:text-6xl xl:text-[4.75rem]">
+				<span data-hero-line class="block overflow-hidden pb-1"><span class="block">Tu</span></span>
+				<span data-hero-line class="block overflow-hidden pb-2">
+					<span class="block">
+						<span data-rotator class="relative inline-grid overflow-hidden align-bottom text-secondary/45">
+							{words.map((w, i) => (
+								<span data-word class:list={['col-start-1 row-start-1 whitespace-nowrap', i > 0 && 'opacity-0']}>{w}</span>
+							))}
+						</span>
+					</span>
+				</span>
+				<span data-hero-line class="block overflow-hidden pb-1"><span class="block">en lo de Carlin.</span></span>
 			</h1>
 
-			<div class="w-16 h-px bg-black/30 my-6"></div>
-
-			<p class="font-montserrat font-normal text-base sm:text-lg text-neutral-800 leading-relaxed max-w-xl">
-				{subtitle}
+			<p data-hero-fade class="mt-6 max-w-md text-base leading-relaxed text-secondary/70 sm:text-lg">
+				Salón amplio, parque lleno de verde y catering. Vos elegís qué festejar, nosotros te damos el lugar.
 			</p>
 
-			<p class="text-neutral-600 text-xs sm:text-sm leading-relaxed max-w-xl mt-3 font-light">
-				{description}
-			</p>
-
-			<!-- Píldoras de servicios con bordes nítidos -->
-			<div class="flex flex-wrap items-center gap-2 mt-8">
-				<span class="text-[11px] uppercase tracking-wider px-3 py-1.5 border border-black/15 bg-neutral-50 text-neutral-800">
-					Vista a las Sierras
-				</span>
-				<span class="text-[11px] uppercase tracking-wider px-3 py-1.5 border border-black/15 bg-neutral-50 text-neutral-800">
-					Fuegos & Asado Criollo
-				</span>
-				<span class="text-[11px] uppercase tracking-wider px-3 py-1.5 border border-black/15 bg-neutral-50 text-neutral-800">
-					Cava de Vinos
-				</span>
-				<span class="text-[11px] uppercase tracking-wider px-3 py-1.5 border border-black/15 bg-neutral-50 text-neutral-800">
-					Cabina DJ & Pantalla LED
-				</span>
-				<span class="text-[11px] uppercase tracking-wider px-3 py-1.5 border border-black/15 bg-neutral-50 text-neutral-800">
-					Coctelería de Autor
-				</span>
-				<span class="text-[11px] uppercase tracking-wider px-3 py-1.5 border border-black/15 bg-neutral-50 text-neutral-800">
-					Servicio Itinerante
-				</span>
-			</div>
-
-			<!-- Botones de Acción: Blanco y Negro, sin redondeces -->
-			<div class="mt-10 flex flex-wrap items-center gap-4">
+			<div data-hero-fade class="mt-8 flex flex-wrap items-center gap-3">
 				<a
-					href="#services"
-					class="inline-flex items-center justify-center gap-3 border border-black bg-black hover:bg-white text-white hover:text-black font-semibold text-xs uppercase tracking-[0.2em] py-4 px-8 transition-all duration-300"
+					href="/reservar"
+					data-magnetic
+					class="group inline-flex items-center gap-3 rounded-full bg-secondary py-2 pl-6 pr-2 text-sm font-semibold text-main shadow-lg shadow-secondary/20 transition-shadow hover:shadow-xl hover:shadow-secondary/30"
 				>
-					<span>Ver Propuestas</span>
-					<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-					</svg>
+					Reservar fecha
+					<span class="flex h-10 w-10 items-center justify-center rounded-full bg-main text-secondary transition-transform duration-500 group-hover:rotate-[-45deg]">
+						<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6" /></svg>
+					</span>
 				</a>
-
 				<a
-					href="#reservas"
-					class="inline-flex items-center justify-center gap-2 border border-black/30 hover:border-black text-black hover:bg-black/5 font-semibold text-xs uppercase tracking-[0.2em] py-4 px-8 transition-all duration-300"
+					href="/espacios"
+					data-magnetic
+					class="inline-flex items-center rounded-full border border-secondary/25 px-6 py-[1.05rem] text-sm font-semibold text-secondary transition-colors hover:border-secondary hover:bg-secondary/5"
 				>
-					<span>Consultar Fecha</span>
+					Conocer el lugar
 				</a>
 			</div>
+
+			<ul data-hero-fade class="mt-10 hidden flex-wrap gap-x-6 gap-y-2 text-sm text-secondary/55 sm:flex">
+				{services.map((s) => (
+					<li class="inline-flex items-center gap-2"><span class="h-1 w-1 rounded-full bg-secondary/40"></span>{s}</li>
+				))}
+			</ul>
 		</div>
 
-		<!-- Columna de imagen principal: Fachada Malabar con marco nítido -->
-		<div class="lg:col-span-5 relative w-full">
-			<div class="relative aspect-4/5 sm:aspect-1/1 lg:aspect-4/5 w-full overflow-hidden border border-black/20 bg-neutral-100 group">
-				<img
-					src="/images/malabar/exterior-sierras.png"
-					alt="Malabar Eventos en Tandil con vista panorámica a las sierras al atardecer"
-					class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-					loading="eager"
-				/>
-				<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
-
-				<!-- Badge superior sin bordes redondeados -->
-				<div class="absolute top-4 right-4">
-					<span class="inline-flex items-center gap-2 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] bg-white/95 border border-black/20 text-black">
-						<span class="w-1.5 h-1.5 bg-black animate-pulse"></span>
-						Spot en las Sierras
-					</span>
-				</div>
-
-				<!-- Pie de imagen nítido -->
-				<div class="absolute bottom-0 inset-x-0 p-5 bg-white/95 backdrop-blur-md border-t border-black/15 text-black">
-					<div class="flex items-center justify-between gap-4">
-						<div>
-							<p class="font-cinzel text-base font-semibold tracking-wider uppercase text-black">Salón & Atardeceres</p>
-							<p class="text-[11px] text-neutral-600 font-montserrat tracking-widest uppercase">Av. Don Bosco • Tandil</p>
-						</div>
-						<a
-							href={defaultWhatsapp}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="shrink-0 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] border border-black bg-black hover:bg-white text-white hover:text-black transition-all duration-200"
-						>
-							Consultar
-						</a>
-					</div>
+		<!-- Composición de imágenes -->
+		<div class="relative h-[19rem] sm:h-[28rem] lg:col-span-6 lg:h-[36rem]">
+			<div data-depth="-18" class="absolute right-0 top-0 h-[88%] w-[78%]">
+				<div data-hero-img class="h-full w-full overflow-hidden rounded-[1.25rem]">
+					<img src="/images/lodecarlin/salon-exterior.jpg" alt="Frente del salón Lo de Carlin entre álamos" width="563" height="532" loading="eager" fetchpriority="high" class="h-full w-full object-cover" />
 				</div>
 			</div>
+			<div data-depth="28" class="absolute bottom-0 left-0 h-[48%] w-[44%]">
+				<div data-hero-img class="h-full w-full overflow-hidden rounded-[1.25rem] ring-8 ring-main">
+					<img src="/images/lodecarlin/catering.jpg" alt="Mesa dulce de un evento" width="528" height="463" loading="eager" class="h-full w-full object-cover" />
+				</div>
+			</div>
+			<div data-depth="12" class="absolute bottom-[6%] right-[4%] hidden sm:block">
+				<div data-hero-img class="overflow-hidden rounded-2xl bg-main/90 px-5 py-4 shadow-xl shadow-black/10 backdrop-blur">
+					<p class="font-display text-3xl font-extrabold text-secondary">Salón + Parque</p>
+					<p class="text-xs uppercase tracking-[0.2em] text-secondary/55">Todo en un mismo lugar</p>
+				</div>
+			</div>
+
+			<!-- Sello giratorio -->
+			<a href={website.instagramDM} target="_blank" rel="noopener noreferrer" aria-label="Reservas por mensaje directo" data-hero-pop data-depth="40" class="absolute left-[30%] top-[2%] flex h-28 w-28 items-center justify-center rounded-full bg-secondary text-main sm:h-32 sm:w-32 lg:left-[8%] lg:top-[10%]">
+				<svg data-spin="16" viewBox="0 0 100 100" class="absolute inset-0 h-full w-full" aria-hidden="true">
+					<defs><path id="circle-path" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0" /></defs>
+					<text class="fill-current text-[9px] font-semibold uppercase">
+						<textPath href="#circle-path" textLength="230" lengthAdjust="spacing">Reservas por MD · Reservas por MD · </textPath>
+					</text>
+				</svg>
+				<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7m0 0H8m9 0v9" /></svg>
+			</a>
 		</div>
 	</div>
+
 </section>
